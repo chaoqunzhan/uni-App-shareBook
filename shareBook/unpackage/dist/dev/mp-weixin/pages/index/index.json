@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "uni-app",
+  "usingComponents": {
+    "share-nav-bar": "/components/share-nav-bar"
+  }
+}

@@ -1,17 +1,24 @@
 <template>
-	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view>
-			<text class="title">{{title}}</text>
+	<view class="box">
+		<view class="content">
+			<view>
+				
+			</view>
 		</view>
+		<share-nav-bar></share-nav-bar>
 	</view>
 </template>
 
+
+
 <script>
+	import shareNavBar from "../../components/share-nav-bar.vue"
+
 	export default {
+		components: {shareNavBar},
 		data() {
 			return {
-				title: 'Hello'
+				title: 'buxing shareBook'
 			}
 		},
 		onLoad() {
@@ -24,19 +31,22 @@
 </script>
 
 <style>
-	.content {
+	.box {
 		text-align: center;
-		height: 400upx;
+		background:#278909;
 	}
-
-	.logo {
-		height: 200upx;
-		width: 200upx;
-		margin-top: 200upx;
+	
+	.content{
+		width:100%;
+		height:1200px;
+		background:#298;
 	}
-
-	.title {
-		font-size: 36upx;
-		color: #8f8f94;
+	
+	share-nav-bar{
+		position:fixed;
+		width:100%;
+		bottom:0;
+		left:0
 	}
+	
 </style>

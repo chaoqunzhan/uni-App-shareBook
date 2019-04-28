@@ -1,0 +1,18 @@
+
+.box {
+	text-align: center;
+	background:#278909;
+}
+.content{
+	width:100%;
+	height:1200px;
+	background:#298;
+}
+share-nav-bar{
+	position:fixed;
+	width:100%;
+	bottom:0;
+	left:0
+}
+
+
