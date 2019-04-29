@@ -8,25 +8,34 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var uniIcon = function uniIcon() {return __webpack_require__.e(/*! import() | components/uni-icon/uni-icon */ "components/uni-icon/uni-icon").then(__webpack_require__.bind(null, /*! @/components/uni-icon/uni-icon.vue */ "E:\\HTML\\uni-App-shareBook\\shareBook\\components\\uni-icon\\uni-icon.vue"));};var _default =
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{
+  components: { uniIcon: uniIcon },
+  data: function data() {
+    return {
+      iconColor: '#535DE9' };
+
+
+  } };exports.default = _default;
 
 /***/ }),
 

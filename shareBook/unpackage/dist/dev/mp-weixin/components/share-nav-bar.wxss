@@ -10,11 +10,19 @@
 	-webkit-flex-direction: row;
 	    -ms-flex-direction: row;
 	        flex-direction: row;
+	background:#fff;
 }
 .nav-btn navigator{
 	-webkit-box-flex: 1;
 	-webkit-flex-grow: 1;
 	    -ms-flex-positive: 1;
 	        flex-grow: 1;
+	/* color: #535DE9; */
+}
+.uni-icon{
+	/* color:#535DE9; */
+}
+.nav-hover{
+	color:#007AFF;
 }
 
