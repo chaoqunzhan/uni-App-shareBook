@@ -1,1 +1,1 @@
-<view class="box" bind:__l="__l"><view class="content"><view></view></view><share-nav-bar></share-nav-bar></view>
+<view class="box" bind:__l="__l"><view class="content"><view></view></view></view>

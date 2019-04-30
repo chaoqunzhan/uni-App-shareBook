@@ -22,7 +22,16 @@
 .uni-icon{
 	/* color:#535DE9; */
 }
-.nav-hover{
+
+/* .nav-hover{
 	color:#007AFF;
+} */
+share-nav-bar{
+	text-align: center;
+	position:fixed;
+	width:100%;
+	bottom:0;
+	left:0
 }
+
 

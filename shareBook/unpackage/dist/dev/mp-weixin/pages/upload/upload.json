@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "首页",
+  "navigationBarTitleText": "上传",
   "usingComponents": {
     "share-nav-bar": "/components/share-nav-bar"
   }

@@ -31,11 +31,11 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 {
   components: { uniIcon: uniIcon },
   data: function data() {
-    return {
-      iconColor: '#535DE9' };
+    return {};
 
 
-  } };exports.default = _default;
+  },
+  methods: {} };exports.default = _default;
 
 /***/ }),
 

@@ -2,13 +2,13 @@
     <view>
         <view class="nav-body">
             <view class="nav-btn">
-                <navigator url="navigate/navigate?title=navigate" hover-class="nav-hover">
+                <navigator open-type="redirectTo" url="../../pages/index/index" :style="iconColorIndex">
                     <uni-icon type="home" size="30"></uni-icon><div>主页</div>
                 </navigator>
-				<navigator url="redirect/redirect?title=redirect" hover-class="nav-hover">
+				<navigator open-type="redirectTo" url="../../pages/upload/upload" :style="iconColorUpload">
 				    <uni-icon type="plus" size="30"></uni-icon><div>发布</div>
-				</navigator>
-                <navigator url="redirect/redirect?title=redirect" hover-class="nav-hover">
+				</navigator> 
+                <navigator open-type="reLaunch" url="../../pages/home/home" :style="iconColorHome">
                     <uni-icon type="contact" size="30"></uni-icon><div>我的</div>
                 </navigator>
             </view>
@@ -22,9 +22,11 @@ export default {
     components: {uniIcon},
 	data(){
 		return{
-			iconColor:'#535DE9'
-		}
-		
+
+		}	
+	},
+	methods:{
+
 	}
 }
 </script>
@@ -46,7 +48,16 @@ export default {
 	/* color:#535DE9; */
 }
 
-.nav-hover{
+/* .nav-hover{
 	color:#007AFF;
+} */
+
+share-nav-bar{
+	text-align: center;
+	position:fixed;
+	width:100%;
+	bottom:0;
+	left:0
 }
+
 </style>
