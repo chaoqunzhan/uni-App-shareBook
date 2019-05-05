@@ -3,23 +3,7 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "首页",
-				"app-plus": {  
-                    "scrollIndicator": "none",  
-                    "titleNView": {  
-                        "titleText":"",//不要设置标题  
-                        "buttons": [{  
-                            "text": "取消",  
-                            "fontSize": "14"  
-                        }],
-						"searchInput":{
-                                "align": "center",
-                                "placeholder": "请输入查找房源信息",
-                                "borderRadius":"50upx",
-                                "backgroundColor": "#fff"
-                        }  
-                    }  
-                }  
+				"navigationBarTitleText": "首页"
 			}
 		},{
 			"path": "pages/upload/upload",
