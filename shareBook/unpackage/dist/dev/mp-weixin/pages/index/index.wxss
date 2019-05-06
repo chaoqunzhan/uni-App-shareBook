@@ -187,10 +187,32 @@
 	-webkit-justify-content:flex-start;
 	    -ms-flex-pack:start;
 	        justify-content:flex-start;
+	margin-bottom:30rpx;
 }
 .card ._img{
 	width:100%;
 }
-
+.card-text ._h2{
+	width:100%;
+	font-size:35rpx;
+	text-align:left;
+	margin:10rpx;
+	-o-text-overflow:ellipsis;
+	   text-overflow:ellipsis;
+	overflow:hidden;
+	white-space:nowrap;
+}
+.card-text ._p{
+	font-size:25rpx;
+	text-align:left;
+	color:#808080;
+	margin:10rpx;
+	overflow: hidden;
+	-o-text-overflow: ellipsis;
+	   text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+}
 
 

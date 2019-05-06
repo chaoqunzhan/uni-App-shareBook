@@ -45,19 +45,21 @@
 			</view>
 			<view class="new-list">
 				<view class="list-left">
-					<view class="card">
-						<img src="../../static/image/sample/sample5.jpg" alt="" style="width:100%;height:+"imgHeight"+upx" @load="onImageLoad">
-						<view class="card-text">这是第一张图片</view>
-					</view>
-					<view class="card">
-						<img src="../../static/image/sample/sample4.jpg" alt="">
-						<view class="card-text">这是第san张图片</br>nihao</view>
+					<view class="card" v-for="(item,index) in cardListLeft">
+						<img :src="item.cardImg" alt="" mode="widthFix" width="100%" @load="ImageLoad">
+						<view class="card-text">
+							<h2>{{item.cardTitle}}</h2>
+							<p>{{item.cardText}}</p>
+						</view>
 					</view>
 				</view>
 				<view class="list-right">
-					<view class="card">
-						<img src="../../static/image/sample/sample4.jpg" alt="">
-						<view class="card-text">这是第二张图片</br>nihao</br>nihao</view>
+					<view class="card" v-for="(item,index) in cardListRight">
+						<img :src="item.cardImg" alt="" mode="widthFix" width="100%" @load="ImageLoad">
+						<view class="card-text">
+							<h2>{{item.cardTitle}}</h2>
+							<p>{{item.cardText}}</p>
+						</view>
 					</view>
 				</view>
 			</view>
@@ -76,15 +78,38 @@
 			return {
 				inputdefault:'',
 				SearchData:{
-					value:'nihao '
+					value:'nihao'
 				},
-				cardImg:"width:100%;height:100upx",
-				imgHeight:100
+				
+				cardList:[{
+					cardImg:"../../static/image/sample/sample1.jpg",
+					cardTitle:"我是第一张图片",
+					cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
+				},{
+					cardImg:"../../static/image/sample/sample4.jpg",
+					cardTitle:"我是第二张图片",
+					cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
+				},{
+					cardImg:"../../static/image/sample/sample5.jpg",
+					cardTitle:"我是第三张图片",
+					cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
+				},{
+					cardImg:"../../static/image/sample/sample2.jpg",
+					cardTitle:"我是第四张图片",
+					cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
+				},{
+					cardImg:"../../static/image/sample/sample3.jpg",
+					cardTitle:"我是第五张图片",
+					cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
+				}],
+				cardListLeft:[],
+				cardListRight:[],
+				cardLeftHeight:"",
+				cardRightHeight:""
 			}
 		},
 		onLoad() {
-			// console.log(this.onImageLoad.detail)
-			// this.startcreatview()
+			this.waterfall();
 		},
 		methods: {
 			SearchClear(){
@@ -97,12 +122,26 @@
 				this.SearchData.value = event.target.value
 			},
 			
-			onImageLoad: function(e){
-				// let imageId = e.currentTarget.id;
+			ImageLoad: function(e){
+				let divWidth = 345;
 				let oImgW = e.detail.width; //图片原始宽度
 				let oImgH = e.detail.height; //图片原始高度
-				console.log("image:"+oImgW);
-				this.cardImg="width:100%;height:200upx"
+				console.log("Width:"+oImgW);
+				console.log("Height:"+oImgH);
+				console.log("rightHeight:"+this.cardRightHeight);
+				// if(this.cardLeftHeight > this.cardRightHeight){
+				// 	this.cardListRight.push(this.cardList[3]);
+				// 	this.cardRightHeight += divWidth*oImgH/oImgW;
+				// }else{
+				// 	this.cardListLeft.push(this.cardList[3]);
+				// 	this.cardLeftHeight += divWidth*oImgH/oImgW;
+				// }
+			},
+			
+			waterfall: function(){
+				this.cardListLeft.push(this.cardList[0]);
+				this.cardListRight.push(this.cardList[1]);
+				var cardLeftHeight,cardRightHeight;
 			}
 		}
 	}
@@ -266,11 +305,33 @@
 	display:flex;
 	flex-direction: column;
 	justify-content:flex-start;
+	margin-bottom:30upx;
 }
 
 .card img{
 	width:100%;
 }
 
+.card-text h2{
+	width:100%;
+	font-size:35upx;
+	text-align:left;
+	margin:10upx;
+	text-overflow:ellipsis;
+	overflow:hidden;
+	white-space:nowrap;
+}
+
+.card-text p{
+	font-size:25upx;
+	text-align:left;
+	color:#808080;
+	margin:10upx;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+}
 
 </style>

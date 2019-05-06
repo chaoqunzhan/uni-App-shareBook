@@ -80,21 +80,46 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
+
 {
   components: { shareNavBar: shareNavBar },
   data: function data() {
     return {
       inputdefault: '',
       SearchData: {
-        value: 'nihao ' },
+        value: 'nihao' },
 
-      cardImg: "width:100%;height:100upx",
-      imgHeight: 100 };
+
+      cardList: [{
+        cardImg: "../../static/image/sample/sample1.jpg",
+        cardTitle: "我是第一张图片",
+        cardText: "来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊" },
+      {
+        cardImg: "../../static/image/sample/sample4.jpg",
+        cardTitle: "我是第二张图片",
+        cardText: "来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊" },
+      {
+        cardImg: "../../static/image/sample/sample5.jpg",
+        cardTitle: "我是第三张图片",
+        cardText: "来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊" },
+      {
+        cardImg: "../../static/image/sample/sample2.jpg",
+        cardTitle: "我是第四张图片",
+        cardText: "来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊" },
+      {
+        cardImg: "../../static/image/sample/sample3.jpg",
+        cardTitle: "我是第五张图片",
+        cardText: "来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊" }],
+
+      cardListLeft: [],
+      cardListRight: [],
+      cardLeftHeight: "",
+      cardRightHeight: "" };
 
   },
   onLoad: function onLoad() {
-    // console.log(this.onImageLoad.detail)
-    // this.startcreatview()
+    this.waterfall();
   },
   methods: {
     SearchClear: function SearchClear() {
@@ -107,12 +132,26 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       this.SearchData.value = event.target.value;
     },
 
-    onImageLoad: function onImageLoad(e) {
-      // let imageId = e.currentTarget.id;
+    ImageLoad: function ImageLoad(e) {
+      var divWidth = 345;
       var oImgW = e.detail.width; //图片原始宽度
       var oImgH = e.detail.height; //图片原始高度
-      console.log("image:" + oImgW);
-      this.cardImg = "width:100%;height:200upx";
+      console.log("Width:" + oImgW);
+      console.log("Height:" + oImgH);
+      console.log("rightHeight:" + this.cardRightHeight);
+      // if(this.cardLeftHeight > this.cardRightHeight){
+      // 	this.cardListRight.push(this.cardList[3]);
+      // 	this.cardRightHeight += divWidth*oImgH/oImgW;
+      // }else{
+      // 	this.cardListLeft.push(this.cardList[3]);
+      // 	this.cardLeftHeight += divWidth*oImgH/oImgW;
+      // }
+    },
+
+    waterfall: function waterfall() {
+      this.cardListLeft.push(this.cardList[0]);
+      this.cardListRight.push(this.cardList[1]);
+      var cardLeftHeight, cardRightHeight;
     } } };exports.default = _default;
 
 /***/ }),
@@ -157,10 +196,6 @@ var render = function() {
 
   var m6 = __webpack_require__(/*! @/static/image/item-mune/qita.png */ "E:\\HTML\\uni-App-shareBook\\shareBook\\static\\image\\item-mune\\qita.png")
 
-  var m7 = __webpack_require__(/*! ../../static/image/sample/sample4.jpg */ "E:\\HTML\\uni-App-shareBook\\shareBook\\static\\image\\sample\\sample4.jpg")
-
-  var m8 = __webpack_require__(/*! ../../static/image/sample/sample4.jpg */ "E:\\HTML\\uni-App-shareBook\\shareBook\\static\\image\\sample\\sample4.jpg")
-
   _vm.$mp.data = Object.assign(
     {},
     {
@@ -171,9 +206,7 @@ var render = function() {
         m3: m3,
         m4: m4,
         m5: m5,
-        m6: m6,
-        m7: m7,
-        m8: m8
+        m6: m6
       }
     }
   )
