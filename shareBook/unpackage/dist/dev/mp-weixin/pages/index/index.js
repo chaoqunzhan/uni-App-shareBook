@@ -8,7 +8,9 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var shareNavBar = function shareNavBar() {return __webpack_require__.e(/*! import() | components/share-nav-bar */ "components/share-nav-bar").then(__webpack_require__.bind(null, /*! ../../components/share-nav-bar.vue */ "E:\\HTML\\uni-App-shareBook\\shareBook\\components\\share-nav-bar.vue"));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var shareNavBar = function shareNavBar() {return __webpack_require__.e(/*! import() | components/share-nav-bar */ "components/share-nav-bar").then(__webpack_require__.bind(null, /*! ../../components/share-nav-bar.vue */ "E:\\HTML\\uni-App-shareBook\\shareBook\\components\\share-nav-bar.vue"));};var _default =
+
+
 
 
 
@@ -91,7 +93,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
         value: 'nihao' },
 
 
-      cardList: [{
+      allcardList: [{
         cardImg: "../../static/image/sample/sample1.jpg",
         cardTitle: "我是第一张图片",
         cardText: "来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊" },
@@ -110,14 +112,48 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       {
         cardImg: "../../static/image/sample/sample3.jpg",
         cardTitle: "我是第五张图片",
+        cardText: "来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊" },
+      {
+        cardImg: "../../static/image/sample/sample6.jpg",
+        cardTitle: "我是第六张图片",
+        cardText: "来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊" },
+      {
+        cardImg: "../../static/image/sample/sample7.jpg",
+        cardTitle: "我是第七张图片",
+        cardText: "来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊" },
+      {
+        cardImg: "../../static/image/sample/sample8.jpg",
+        cardTitle: "我是第八张图片",
+        cardText: "来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊" },
+      {
+        cardImg: "../../static/image/sample/sample9.jpg",
+        cardTitle: "我是第九张图片",
+        cardText: "来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊" },
+      {
+        cardImg: "../../static/image/sample/sample10.jpg",
+        cardTitle: "我是第十张图片",
+        cardText: "来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊" },
+      {
+        cardImg: "../../static/image/sample/sample11.jpg",
+        cardTitle: "我是第十一张图片",
+        cardText: "来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊" },
+      {
+        cardImg: "../../static/image/sample/sample12.jpg",
+        cardTitle: "我是第十二张图片",
         cardText: "来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊" }],
 
       cardListLeft: [],
       cardListRight: [],
-      cardLeftHeight: "",
-      cardRightHeight: "" };
+      cardLeftHeight: 0,
+      cardRightHeight: 0,
+      cardListItem: 0,
+      rImgH: 0,
+      preLoadImg: "",
+
+      contentH: 1000 };
 
   },
+
   onLoad: function onLoad() {
     this.waterfall();
   },
@@ -132,27 +168,73 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       this.SearchData.value = event.target.value;
     },
 
-    ImageLoad: function ImageLoad(e) {
+    // preImageLoad:function(pre){
+    // 	let divWidth = 345;
+    // 	let oImgW = pre.detail.width; //图片原始宽度
+    // 	let oImgH = pre.detail.height; //图片原始高度
+    // 	this.rImgH = divWidth*oImgH/oImgW+212;
+    // },
+
+    onImageLoad: function onImageLoad(e) {
+
       var divWidth = 345;
       var oImgW = e.detail.width; //图片原始宽度
       var oImgH = e.detail.height; //图片原始高度
-      console.log("Width:" + oImgW);
-      console.log("Height:" + oImgH);
-      console.log("rightHeight:" + this.cardRightHeight);
-      // if(this.cardLeftHeight > this.cardRightHeight){
-      // 	this.cardListRight.push(this.cardList[3]);
-      // 	this.cardRightHeight += divWidth*oImgH/oImgW;
-      // }else{
-      // 	this.cardListLeft.push(this.cardList[3]);
-      // 	this.cardLeftHeight += divWidth*oImgH/oImgW;
-      // }
+      var rImgH = divWidth * oImgH / oImgW + 170;
+      if (this.cardListItem == 0) {
+        this.cardLeftHeight += rImgH; //第一张图高度加到cardLeftHeight
+        this.cardListItem++; //图片索引加1
+        this.cardListRight.push(this.cardList[this.cardListItem]); //添加第二张图到cardListRight数组
+      } else {
+        this.cardListItem++; //图片索引加1
+        if (this.cardLeftHeight > this.cardRightHeight) {
+          this.cardRightHeight += rImgH; //第二张图高度加到cardRightHeight
+        } else {
+          this.cardLeftHeight += rImgH;
+        }
+
+        if (this.cardListItem < this.cardList.length) {
+          if (this.cardLeftHeight > this.cardRightHeight) {
+            this.cardListRight.push(this.cardList[this.cardListItem]); //添加第三张图到cardListRight数组
+          } else {
+            this.cardListLeft.push(this.cardList[this.cardListItem]);
+          }
+        }
+      }
+
+      console.log(this.cardListItem);
+      if (this.cardListItem % 4 == 0) {
+        console.log("rightHeight:" + this.cardRightHeight);
+        console.log("leftHeight:" + this.cardLeftHeight);
+        var contentHupx;
+        this.cardLeftHeight > this.cardRightHeight ? contentHupx = this.cardLeftHeight : contentHupx = this.cardRightHeight;
+        this.contentH = uni.upx2px(contentHupx + 40);
+        console.log(this.contentH);
+      }
+
+
     },
 
     waterfall: function waterfall() {
+      this.cardList = this.allcardList.slice(0, 4); //初始化图片显示
       this.cardListLeft.push(this.cardList[0]);
-      this.cardListRight.push(this.cardList[1]);
-      var cardLeftHeight, cardRightHeight;
+      this.preLoadImg = this.cardList[0].cardImg;
+    },
+
+    loadMore: function loadMore() {
+      console.log("loadMore");
+      // console.log(this.cardList);
+      var newcardList = this.allcardList.slice(this.cardListItem, this.cardListItem + 4);
+      // console.log(newcardList);
+      this.cardList = this.cardList.concat(newcardList);
+      console.log(this.cardList);
+      if (this.cardLeftHeight > this.cardRightHeight) {
+        this.cardListRight.push(newcardList[0]);
+      } else {
+        this.cardListLeft.push(newcardList[0]);
+      }
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 

@@ -1,5 +1,5 @@
 <template>
-	<view class="box">
+	<view class="box" >
 		<view class="weui-search-bar">
 			<view class="weui-search-bar__form">
 				<view class="weui-search-bar__box">
@@ -15,7 +15,8 @@
 				 <text wx:else data-key='back'>返回</text>
 			</view>
 		</view>
-		<view class="content">
+		
+		<scroll-view class="content" v-bind:style="{height:contentH+'px'}" scroll-y="true" @scrolltolower="loadMore" lower-threshold="100">
 			<view class="bonner">
 				<swiper class="swiper" :indicator-dots=true :autoplay=true :interval=5000 :duration=500>
 					<swiper-item>
@@ -44,9 +45,10 @@
 				</navigator>
 			</view>
 			<view class="new-list">
+<!-- 				<img :src="preLoadImg" alt="" mode="widthFix" width="100%" @load="preImageLoad" v-show="false"> -->
 				<view class="list-left">
 					<view class="card" v-for="(item,index) in cardListLeft">
-						<img :src="item.cardImg" alt="" mode="widthFix" width="100%" @load="ImageLoad">
+						<img :src="item.cardImg" alt="" mode="widthFix" width="100%" @load="onImageLoad">
 						<view class="card-text">
 							<h2>{{item.cardTitle}}</h2>
 							<p>{{item.cardText}}</p>
@@ -54,8 +56,8 @@
 					</view>
 				</view>
 				<view class="list-right">
-					<view class="card" v-for="(item,index) in cardListRight">
-						<img :src="item.cardImg" alt="" mode="widthFix" width="100%" @load="ImageLoad">
+					<view class="card" v-for="(item,index) in cardListRight" >
+						<img :src="item.cardImg" alt="" mode="widthFix" width="100%" @load="onImageLoad">
 						<view class="card-text">
 							<h2>{{item.cardTitle}}</h2>
 							<p>{{item.cardText}}</p>
@@ -63,7 +65,7 @@
 					</view>
 				</view>
 			</view>
-		</view>
+		</scroll-view>
 	</view>
 </template>
 
@@ -81,7 +83,7 @@
 					value:'nihao'
 				},
 				
-				cardList:[{
+				allcardList:[{
 					cardImg:"../../static/image/sample/sample1.jpg",
 					cardTitle:"我是第一张图片",
 					cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
@@ -101,13 +103,47 @@
 					cardImg:"../../static/image/sample/sample3.jpg",
 					cardTitle:"我是第五张图片",
 					cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
+				},{
+					cardImg:"../../static/image/sample/sample6.jpg",
+					cardTitle:"我是第六张图片",
+					cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
+				},{
+					cardImg:"../../static/image/sample/sample7.jpg",
+					cardTitle:"我是第七张图片",
+					cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
+				},{
+					cardImg:"../../static/image/sample/sample8.jpg",
+					cardTitle:"我是第八张图片",
+					cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
+				},{
+					cardImg:"../../static/image/sample/sample9.jpg",
+					cardTitle:"我是第九张图片",
+					cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
+				},{
+					cardImg:"../../static/image/sample/sample10.jpg",
+					cardTitle:"我是第十张图片",
+					cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
+				},{
+					cardImg:"../../static/image/sample/sample11.jpg",
+					cardTitle:"我是第十一张图片",
+					cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
+				},{
+					cardImg:"../../static/image/sample/sample12.jpg",
+					cardTitle:"我是第十二张图片",
+					cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
 				}],
 				cardListLeft:[],
 				cardListRight:[],
-				cardLeftHeight:"",
-				cardRightHeight:""
+				cardLeftHeight:0,
+				cardRightHeight:0,
+				cardListItem:0,
+				rImgH:0,
+				preLoadImg:"",
+				
+				contentH:1000
 			}
 		},
+		
 		onLoad() {
 			this.waterfall();
 		},
@@ -122,26 +158,71 @@
 				this.SearchData.value = event.target.value
 			},
 			
-			ImageLoad: function(e){
+			// preImageLoad:function(pre){
+			// 	let divWidth = 345;
+			// 	let oImgW = pre.detail.width; //图片原始宽度
+			// 	let oImgH = pre.detail.height; //图片原始高度
+			// 	this.rImgH = divWidth*oImgH/oImgW+212;
+			// },
+			
+			onImageLoad: function(e){
+
 				let divWidth = 345;
 				let oImgW = e.detail.width; //图片原始宽度
 				let oImgH = e.detail.height; //图片原始高度
-				console.log("Width:"+oImgW);
-				console.log("Height:"+oImgH);
-				console.log("rightHeight:"+this.cardRightHeight);
-				// if(this.cardLeftHeight > this.cardRightHeight){
-				// 	this.cardListRight.push(this.cardList[3]);
-				// 	this.cardRightHeight += divWidth*oImgH/oImgW;
-				// }else{
-				// 	this.cardListLeft.push(this.cardList[3]);
-				// 	this.cardLeftHeight += divWidth*oImgH/oImgW;
-				// }
+				let rImgH = divWidth*oImgH/oImgW+170;
+				if(this.cardListItem==0){
+					this.cardLeftHeight += rImgH;	//第一张图高度加到cardLeftHeight
+					this.cardListItem++;			//图片索引加1
+					this.cardListRight.push(this.cardList[this.cardListItem]);	//添加第二张图到cardListRight数组
+				}else{
+					this.cardListItem++;		//图片索引加1
+						if(this.cardLeftHeight > this.cardRightHeight){
+							this.cardRightHeight += rImgH;		//第二张图高度加到cardRightHeight
+						}else{
+							this.cardLeftHeight += rImgH;
+						}
+						
+					if(this.cardListItem<this.cardList.length){	
+						if(this.cardLeftHeight > this.cardRightHeight){
+							this.cardListRight.push(this.cardList[this.cardListItem]);		//添加第三张图到cardListRight数组
+						}else{
+							this.cardListLeft.push(this.cardList[this.cardListItem]);
+						}
+					}
+				}
+				
+				console.log(this.cardListItem);
+				if(this.cardListItem%4 == 0){
+					console.log("rightHeight:"+this.cardRightHeight);
+					console.log("leftHeight:"+this.cardLeftHeight);
+					var contentHupx;
+					this.cardLeftHeight > this.cardRightHeight ? contentHupx = this.cardLeftHeight : contentHupx = this.cardRightHeight;
+					this.contentH = uni.upx2px(contentHupx+40);
+					console.log(this.contentH);
+				}
+				
+				
 			},
 			
 			waterfall: function(){
+				this.cardList = this.allcardList.slice(0,4);		//初始化图片显示
 				this.cardListLeft.push(this.cardList[0]);
-				this.cardListRight.push(this.cardList[1]);
-				var cardLeftHeight,cardRightHeight;
+				this.preLoadImg = this.cardList[0].cardImg;
+			},
+			
+			loadMore: function(){
+				console.log("loadMore");
+				// console.log(this.cardList);
+				let newcardList = this.allcardList.slice(this.cardListItem,this.cardListItem+4);
+				// console.log(newcardList);
+				this.cardList = this.cardList.concat(newcardList);
+				console.log(this.cardList);
+				if(this.cardLeftHeight > this.cardRightHeight){
+					this.cardListRight.push(newcardList[0]);
+				}else{
+					this.cardListLeft.push(newcardList[0]);
+				}
 			}
 		}
 	}
@@ -231,7 +312,8 @@
 
 .content{
 	width:100%;
-	height:2400upx;
+	/* display:inline; */
+	/* height:2400upx; */
 }
 
 .bonner{
@@ -314,6 +396,8 @@
 
 .card-text h2{
 	width:100%;
+	line-height:40upx;
+	height:40upx;
 	font-size:35upx;
 	text-align:left;
 	margin:10upx;
@@ -324,6 +408,8 @@
 
 .card-text p{
 	font-size:25upx;
+	height:60upx;
+	line-height:30upx;
 	text-align:left;
 	color:#808080;
 	margin:10upx;
