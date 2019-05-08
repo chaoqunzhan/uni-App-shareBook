@@ -219,5 +219,11 @@
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
 }
+.noMore{
+	width:100%;
+	background:#f0f0f0;
+	font-size:24rpx;
+	color:#808080;
+}
 
 
