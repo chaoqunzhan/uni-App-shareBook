@@ -131,13 +131,12 @@
 	-webkit-flex-direction: column;
 	    -ms-flex-direction: column;
 	        flex-direction: column;
-	-webkit-box-shadow:0px 0px 10px 1px #C0C0C0;
-	        box-shadow:0px 0px 10px 1px #C0C0C0;
+	/* box-shadow:0px 0px 10px 1px #C0C0C0; */
 	border-radius:20rpx;
 }
 .item-mune navigator ._img{
-	width:80rpx;
-	height:80rpx;
+	width:60rpx;
+	height:60rpx;
 	margin:0 auto;
 	/* box-shadow:-5px 50px 50px 2px #C0C0C0; */
 }
@@ -174,7 +173,9 @@
 .card{
 	width:100%;
 	border-radius:10rpx;
-	border:1px solid #289;
+	/* border:1upx solid #fff; */
+	-webkit-box-shadow:0px 0px 5px 2px #C0C0C0;
+	        box-shadow:0px 0px 5px 2px #C0C0C0;
 	display:-webkit-box;
 	display:-webkit-flex;
 	display:-ms-flexbox;
@@ -192,6 +193,8 @@
 }
 .card ._img{
 	width:100%;
+	border-top-left-radius:10rpx;
+	border-top-right-radius:10rpx;
 }
 .card-text ._h2{
 	width:100%;

@@ -8,87 +8,84 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var shareNavBar = function shareNavBar() {return __webpack_require__.e(/*! import() | components/share-nav-bar */ "components/share-nav-bar").then(__webpack_require__.bind(null, /*! ../../components/share-nav-bar.vue */ "E:\\HTML\\uni-App-shareBook\\shareBook\\components\\share-nav-bar.vue"));};var _default =
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default =
 {
-  components: { shareNavBar: shareNavBar },
   data: function data() {
     return {
       inputdefault: '',
@@ -96,6 +93,7 @@
         value: 'nihao' },
 
 
+      animationData: {},
       allcardList: [{
         cardImg: "../../static/image/sample/sample1.jpg",
         cardTitle: "我是第一张图片",
@@ -160,6 +158,26 @@
   onLoad: function onLoad() {
     this.waterfall(); //初始化瀑布流
   },
+  onShow: function onShow() {
+    var animation = uni.createAnimation({
+      duration: 1000,
+      timingFunction: 'ease' });
+
+
+    this.animation = animation;
+
+    animation.step();
+
+    this.animationData = animation.export();
+
+    setTimeout(function () {
+      // this.animation.translate(-100).step()
+      this.animation.opacity(1).step();
+      this.animationData = animation.export();
+    }.bind(this), 1000);
+  },
+
+
   methods: {
     SearchClear: function SearchClear() {
       this.inputdefault = "";

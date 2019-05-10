@@ -56,7 +56,7 @@
 					</view>
 				</view>
 				<view class="list-right">
-					<view class="card" v-for="(item,index) in cardListRight" >
+					<view class="card" v-for="(item,index) in cardListRight">
 						<img :src="item.cardImg" alt="" mode="widthFix" width="100%" @load="onImageLoad">
 						<view class="card-text">
 							<h2>{{item.cardTitle}}</h2>
@@ -75,10 +75,7 @@
 
 
 <script>
-	import shareNavBar from "../../components/share-nav-bar.vue"
-
 	export default {
-		components: {shareNavBar},
 		data() {
 			return {
 				inputdefault:'',
@@ -86,6 +83,7 @@
 					value:'nihao'
 				},
 				
+				animationData: {},
 				allcardList:[{
 					cardImg:"../../static/image/sample/sample1.jpg",
 					cardTitle:"我是第一张图片",
@@ -150,6 +148,26 @@
 		onLoad() {
 			this.waterfall();			//初始化瀑布流
 		},
+		onShow: function(){
+			var animation = uni.createAnimation({
+			  duration: 1000,
+				timingFunction: 'ease',
+			})
+
+			this.animation = animation
+
+			animation.step()
+
+			this.animationData = animation.export()
+
+			setTimeout(function() {
+				// this.animation.translate(-100).step()
+				this.animation.opacity(1).step()
+				this.animationData = animation.export()
+			}.bind(this), 1000)
+		},
+		
+		
 		methods: {
 			SearchClear(){
 				this.inputdefault="";
@@ -172,7 +190,7 @@
 				if(this.cardListItem==0){
 					this.cardLeftHeight += rImgH;	//第一张card高度加到cardLeftHeight
 					this.cardListItem++;			//card索引加1
-					this.cardListRight.push(this.cardList[this.cardListItem]);	//添加第二张card到cardListRight数组
+					this.cardListRight.push(this.cardList[this.cardListItem])//添加第二张card到cardListRight数组
 				}else{
 					this.cardListItem++;		//card索引加1
 					
@@ -184,9 +202,9 @@
 						
 					if(this.cardListItem<this.cardList.length){				//根据目前的栏高，把下一张card，push到低的那栏
 						if(this.cardLeftHeight > this.cardRightHeight){
-							this.cardListRight.push(this.cardList[this.cardListItem]);		//添加第三张card到cardListRight数组
+							this.cardListRight.push(this.cardList[this.cardListItem])	//添加第三张card到cardListRight数组
 						}else{
-							this.cardListLeft.push(this.cardList[this.cardListItem]);
+							this.cardListLeft.push(this.cardList[this.cardListItem])
 						}
 					}
 				}
@@ -363,13 +381,13 @@
 	/* background:#890; */
 	display: flex;
 	flex-direction: column;
-	box-shadow:0px 0px 10px 1px #C0C0C0;
+	/* box-shadow:0px 0px 10px 1px #C0C0C0; */
 	border-radius:20upx;
 }
 
 .item-mune navigator img{
-	width:80upx;
-	height:80upx;
+	width:60upx;
+	height:60upx;
 	margin:0 auto;
 	/* box-shadow:-5px 50px 50px 2px #C0C0C0; */
 }
@@ -393,15 +411,19 @@
 .card{
 	width:100%;
 	border-radius:10upx;
-	border:1px solid #289;
+	/* border:1upx solid #fff; */
+	box-shadow:0px 0px 5px 2px #C0C0C0;
 	display:flex;
 	flex-direction: column;
 	justify-content:flex-start;
 	margin-bottom:30upx;
 }
 
+
 .card img{
 	width:100%;
+	border-top-left-radius:10upx;
+	border-top-right-radius:10upx;
 }
 
 .card-text h2{

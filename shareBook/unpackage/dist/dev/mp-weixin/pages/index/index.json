@@ -1,6 +1,4 @@
 {
   "navigationBarTitleText": "首页",
-  "usingComponents": {
-    "share-nav-bar": "/components/share-nav-bar"
-  }
+  "usingComponents": {}
 }

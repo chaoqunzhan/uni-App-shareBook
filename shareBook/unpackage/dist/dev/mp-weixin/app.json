@@ -8,7 +8,7 @@
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-app",
-    "navigationBarBackgroundColor": "#F8F8F8",
+    "navigationBarBackgroundColor": "#39cffc",
     "backgroundColor": "#F8F8F8",
     "navigationStyle": "default"
   },
