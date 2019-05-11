@@ -54,14 +54,15 @@
 				
 				<view class="uni-list-sort">
 					<view class="uni-list-sort-db">
-						<textarea placeholder-style="color:#808080" placeholder="输入物品描述"/>
+						<textarea placeholder-style="color:#808080" placeholder="(少于200字)输入物品描述,并上传照片"/>
 					</view>
 				</view>
 				
 				<view class="list-photo">
-					<img src="@/static/image/item-mune/photo.png" width="100%" mode="scaleToFill">
+					<img src="@/static/image/item-mune/photo.png" width="100%" mode="widthFix">
 				</view>
 				
+				<button class="list-button" form-type="submit">点击提交</button>
 			</view>
 		</form>
 	</view>
@@ -139,9 +140,21 @@
 	width:50upx;
 }
 
-.list-photo{
-	width:300upx;
-	background:#890909;
+.list-photo img{
+	width:250upx;
 }
+
+.list-photo{
+	margin:0 auto;
+}
+
+.list-button{
+	color:#fff;
+	background:#39CFFC;
+	margin-top:30upx;
+	width:680upx;
+}
+
+
 
 </style>

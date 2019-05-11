@@ -1,12 +1,12 @@
 {
   "pages": [
-    "pages/index/index",
+    "pages/home/home",
     "pages/upload/upload",
-    "pages/home/home"
+    "pages/index/index"
   ],
   "subPackages": [],
   "window": {
-    "navigationBarTextStyle": "black",
+    "navigationBarTextStyle": "white",
     "navigationBarTitleText": "uni-app",
     "navigationBarBackgroundColor": "#39cffc",
     "backgroundColor": "#F8F8F8",
@@ -20,20 +20,20 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "iconPath": "static/image/home.jpg",
-        "selectedIconPath": "static/image/home1.jpg",
+        "iconPath": "static/image/home.png",
+        "selectedIconPath": "static/image/homeSelected.png",
         "text": "首页"
       },
       {
         "pagePath": "pages/upload/upload",
-        "iconPath": "static/image/web.jpg",
-        "selectedIconPath": "static/image/web1.jpg",
+        "iconPath": "static/image/upload.png",
+        "selectedIconPath": "static/image/uploadSelected.png",
         "text": "上传"
       },
       {
         "pagePath": "pages/home/home",
-        "iconPath": "static/image/me.jpg",
-        "selectedIconPath": "static/image/me1.jpg",
+        "iconPath": "static/image/me.png",
+        "selectedIconPath": "static/image/meSelected.png",
         "text": "个人"
       }
     ]

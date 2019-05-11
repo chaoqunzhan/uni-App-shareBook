@@ -45,9 +45,19 @@
 .uni-list-sort-left ._img{
 	width:50rpx;
 }
-.list-photo{
-	width:300rpx;
-	background:#890909;
+.list-photo ._img{
+	width:250rpx;
 }
+.list-photo{
+	margin:0 auto;
+}
+.list-button{
+	color:#fff;
+	background:#39CFFC;
+	margin-top:30rpx;
+	width:680rpx;
+}
+
+
 
 
