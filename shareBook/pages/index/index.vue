@@ -45,23 +45,26 @@
 				</navigator>
 			</view>
 			<view class="new-list">
-<!-- 				<img :src="preLoadImg" alt="" mode="widthFix" width="100%" @load="preImageLoad" v-show="false"> -->
 				<view class="list-left">
 					<view class="card" v-for="(item,index) in cardListLeft">
-						<img :src="item.cardImg" alt="" mode="widthFix" width="100%" @load="onImageLoad">
-						<view class="card-text">
-							<h2>{{item.cardTitle}}</h2>
-							<p>{{item.cardText}}</p>
-						</view>
+						<navigator url="../../pages/detail/detail?id=1" hover-class="navigator-hover">
+							<img :src="item.cardImg" alt="" mode="widthFix" width="100%" @load="onImageLoad">
+							<view class="card-text">
+								<h2>{{item.cardTitle}}</h2>
+								<p>{{item.cardText}}</p>
+							</view>
+						</navigator>
 					</view>
 				</view>
 				<view class="list-right">
 					<view class="card" v-for="(item,index) in cardListRight">
-						<img :src="item.cardImg" alt="" mode="widthFix" width="100%" @load="onImageLoad">
-						<view class="card-text">
-							<h2>{{item.cardTitle}}</h2>
-							<p>{{item.cardText}}</p>
-						</view>
+						<navigator url="../../pages/detail/detail?id=1" hover-class="navigator-hover">
+							<img :src="item.cardImg" alt="" mode="widthFix" width="100%" @load="onImageLoad">
+							<view class="card-text">
+								<h2>{{item.cardTitle}}</h2>
+								<p>{{item.cardText}}</p>
+							</view>
+						</navigator>
 					</view>
 				</view>
 			</view>

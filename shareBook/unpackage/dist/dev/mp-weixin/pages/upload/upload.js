@@ -83,8 +83,8 @@ var _default =
   data: function data() {
     return {
       title: 'buxing shareBook',
-      formData: {},
-
+      formData: {
+        title: "" },
 
       sortArray: ["课本", "IT", "自行车", "其他"],
       sortDefault: 0,
@@ -104,6 +104,9 @@ var _default =
       this.ageDefault = e.target.value;
       this.formData.age = this.ageArray[e.target.value];
       console.log('picker发送选择改变，携带值为', this.formData);
+    },
+    formSubmit: function formSubmit(e) {
+      console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value));
     } } };exports.default = _default;
 
 /***/ }),

@@ -8,7 +8,7 @@
 					</view>
 					<view class="uni-list-middle">|</view>
 					<view class="uni-list-sort-db">
-						<picker @change="bindPickerSort" :value="sortDefault" :range="sortArray">
+						<picker name="sort" @change="bindPickerSort" :value="sortDefault" :range="sortArray">
 							<view class="uni-input">{{sortArray[sortDefault]}}</view>
 						</picker>
 					</view>
@@ -20,7 +20,7 @@
 					</view>
 					<view class="uni-list-middle">|</view>
 					<view class="uni-list-sort-db">
-						<picker @change="bindPickerAge" :value="ageDefault" :range="ageArray">
+						<picker name="age" @change="bindPickerAge" :value="ageDefault" :range="ageArray">
 							<view class="uni-input">{{ageArray[ageDefault]}}</view>
 						</picker>
 					</view>
@@ -29,32 +29,32 @@
 				<view class="uni-list-sort">
 					<view class="uni-list-sort-left">物品名称</view>
 					<view class="uni-list-middle">|</view>
-					<input class="uni-list-sort-db" maxlength="20" placeholder="(必填)最长输入为20" />
+					<input name="title" class="uni-list-sort-db" maxlength="20" placeholder="(必填)最长输入为20" />
 				</view>
 				
 				<view class="uni-list-sort">
 					<view class="uni-list-sort-left">期望价格</view>
 					<view class="uni-list-middle">|</view>
-					<input class="uni-list-sort-db" type="number" placeholder="单位:元" />
+					<input name="value" class="uni-list-sort-db" type="number" placeholder="单位:元" />
 				</view>
 				<view class="list-guodu"></view>
 				
 				<view class="uni-list-sort">
 					<view class="uni-list-sort-left"><img src="@/static/image/item-mune/phone.png" width="100%" mode="widthFix"></view>
 					<view class="uni-list-middle">:</view>
-					<input class="uni-list-sort-db" type="number" placeholder="(必填)联系电话" />
+					<input name="phone" class="uni-list-sort-db" type="number" placeholder="(必填)联系电话" />
 				</view>
 				
 				<view class="uni-list-sort">
 					<view class="uni-list-sort-left"><img src="@/static/image/item-mune/address.png" width="100%" mode="widthFix"></view>
 					<view class="uni-list-middle">:</view>
-					<input class="uni-list-sort-db" type="number" placeholder="地址" />
+					<input name="address" class="uni-list-sort-db" type="number" placeholder="地址" />
 				</view>
 				<view class="list-guodu"></view>
 				
 				<view class="uni-list-sort">
 					<view class="uni-list-sort-db">
-						<textarea placeholder-style="color:#808080" placeholder="(少于200字)输入物品描述,并上传照片"/>
+						<textarea name="describe" placeholder-style="color:#808080" placeholder="(少于200字)输入物品描述,并上传照片"/>
 					</view>
 				</view>
 				
@@ -74,7 +74,7 @@
 			return {
 				title: 'buxing shareBook',
 				formData:{
-					
+					title:"",
 				},
 				sortArray:["课本","IT","自行车","其他"],
 				sortDefault:0,
@@ -94,66 +94,69 @@
 				this.ageDefault = e.target.value;
 				this.formData.age = this.ageArray[e.target.value]
 				console.log('picker发送选择改变，携带值为', this.formData)
+			},
+			formSubmit: function(e){
+				console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value))
 			}
 		}
 	}
 </script>
 
 <style>
-.uni-list{
-	width:100%;
-	display:flex;
-	flex-direction:column;
-}
+	.uni-list{
+		width:100%;
+		display:flex;
+		flex-direction:column;
+	}
 
-.uni-list-middle{
-	margin:30upx 0;
-	color:#e0e0e0;
-	/* width:1upx; */
-	/* border:1px solid #808080; */
-}
+	.uni-list-middle{
+		margin:30upx 0;
+		color:#e0e0e0;
+		/* width:1upx; */
+		/* border:1px solid #808080; */
+	}
 
-.list-guodu{
-	width:100%;
-	height:30upx;
-	background:#e0e0e0;
-}
+	.list-guodu{
+		width:100%;
+		height:30upx;
+		background:#e0e0e0;
+	}
 
 
-.uni-list-sort{
-	width:100%;
-	border-bottom:1px solid #e0e0e0;
-	display:flex;
-	flex-direction:row;	
-}
+	.uni-list-sort{
+		width:100%;
+		border-bottom:1px solid #e0e0e0;
+		display:flex;
+		flex-direction:row;	
+	}
 
-.uni-list-sort-left{
-	/* border-right:1px dotted #808080; */
-	margin:30upx;
-}
+	.uni-list-sort-left{
+		/* border-right:1px dotted #808080; */
+		margin:30upx;
+	}
 
-.uni-list-sort-db{
-	margin:30upx;
-}
+	.uni-list-sort-db{
+		margin:30upx;
+	}
 
-.uni-list-sort-left img{
-	width:50upx;
-}
+	.uni-list-sort-left img{
+		width:50upx;
+	}
 
-.list-photo img{
-	width:250upx;
-}
+	.list-photo img{
+		width:250upx;
+	}
 
-.list-photo{
-	margin:0 auto;
-}
+	.list-photo{
+		margin:0 auto;
+	}
 
-.list-button{
-	color:#fff;
-	background:#39CFFC;
-	margin-top:30upx;
-	width:680upx;
-}
+	.list-button{
+		color:#fff;
+		background:#39CFFC;
+		margin-top:30upx;
+		width:680upx;
+	}
 
 
 
