@@ -102,7 +102,7 @@ var _default =
         cardTitle: "我是第一张图片",
         cardText: "来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊" },
       {
-        cardImg: "../../static/image/sample/sample4.jpg",
+        cardImg: "https://qiniu.cqz21.top/sample1.jpg",
         cardTitle: "我是第二张图片",
         cardText: "来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊" },
       {
@@ -160,6 +160,21 @@ var _default =
 
   onLoad: function onLoad() {
     this.waterfall(); //初始化瀑布流
+
+    uni.request({
+      url: 'http://192.168.1.154:3000/goodsList', //接口地址。
+      data: {},
+
+
+      header: {
+        //自定义请求头信息
+      },
+      method: "GET",
+      success: function success(res) {
+        console.log(res.data);
+      } });
+
+
   },
   onShow: function onShow() {
     var animation = uni.createAnimation({

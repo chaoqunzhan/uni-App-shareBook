@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -107,7 +107,22 @@ var _default =
     },
     formSubmit: function formSubmit(e) {
       console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value));
+
+      uni.request({ //上传表单
+        url: 'http://192.168.1.154:3000/goodsUpload', //接口地址。
+        data: {
+          good: JSON.stringify(e.detail.value) },
+
+        header: {
+          'content-type': 'application/json' //自定义请求头信息
+        },
+        method: "POST",
+        success: function success(res) {
+          console.log(res.data);
+        } });
+
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 

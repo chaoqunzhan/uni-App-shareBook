@@ -96,7 +96,21 @@
 				console.log('picker发送选择改变，携带值为', this.formData)
 			},
 			formSubmit: function(e){
-				console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value))
+				console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value));
+				
+				uni.request({				//上传表单
+					url: 'http://192.168.1.154:3000/goodsUpload', //接口地址。
+					data: {
+						good:JSON.stringify(e.detail.value),
+					},
+					header: {
+						'content-type':'application/json'//自定义请求头信息
+					},
+					method:"POST",
+					success: (res) => {
+						console.log(res.data);
+					}
+				});
 			}
 		}
 	}
