@@ -59,7 +59,8 @@
 				</view>
 				
 				<view class="list-photo">
-					<img src="@/static/image/item-mune/photo.png" width="100%" mode="widthFix">
+					<img :src="item" mode="aspectFill" v-for="(item,index) in photoList">
+					<img src="@/static/image/item-mune/photo.png" mode="widthFix" @click = "chooseImg">
 				</view>
 				
 				<button class="list-button" form-type="submit">点击提交</button>
@@ -79,7 +80,11 @@
 				sortArray:["课本","IT","自行车","其他"],
 				sortDefault:0,
 				ageArray:["小于一个月","小于六个月","小于一年","小于三年","其他"],
-				ageDefault:0
+				ageDefault:0,
+				// photoList:[{url:"https://qiniu.cqz21.top/%E5%8E%9F%E5%9E%8B2.JPG"},
+				// {url:"https://qiniu.cqz21.top/%E5%8E%9F%E5%9E%8B2.JPG"},
+				// {url:"https://qiniu.cqz21.top/%E5%8E%9F%E5%9E%8B%E9%93%BE1.JPG"}]
+				photoList:[]
 			}
 		},
 		onLoad() {
@@ -109,6 +114,19 @@
 					method:"POST",
 					success: (res) => {
 						console.log(res.data);
+					}
+				});
+			},
+			chooseImg: function(){
+				var that = this;
+				uni.chooseImage({
+					count: 9, //默认9
+					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+					sourceType: ['album'], //从相册选择
+					success: function (res) {
+						that.photoList = res.tempFilePaths;
+						// console.log(JSON.stringify(res.tempFilePaths));
+						// console.log(typeof(that.photoList));
 					}
 				});
 			}
@@ -158,10 +176,14 @@
 	}
 
 	.list-photo img{
-		width:250upx;
+		width:230upx;
+		height:230upx;
+		margin:10upx;
 	}
 
 	.list-photo{
+		width:100%;
+		/* background:#238778; */
 		margin:0 auto;
 	}
 

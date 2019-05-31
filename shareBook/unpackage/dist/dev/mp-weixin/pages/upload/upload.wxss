@@ -46,9 +46,13 @@
 	width:50rpx;
 }
 .list-photo ._img{
-	width:250rpx;
+	width:230rpx;
+	height:230rpx;
+	margin:10rpx;
 }
 .list-photo{
+	width:100%;
+	/* background:#238778; */
 	margin:0 auto;
 }
 .list-button{

@@ -78,6 +78,7 @@
 //
 //
 //
+//
 var _default =
 {
   data: function data() {
@@ -89,7 +90,11 @@ var _default =
       sortArray: ["课本", "IT", "自行车", "其他"],
       sortDefault: 0,
       ageArray: ["小于一个月", "小于六个月", "小于一年", "小于三年", "其他"],
-      ageDefault: 0 };
+      ageDefault: 0,
+      // photoList:[{url:"https://qiniu.cqz21.top/%E5%8E%9F%E5%9E%8B2.JPG"},
+      // {url:"https://qiniu.cqz21.top/%E5%8E%9F%E5%9E%8B2.JPG"},
+      // {url:"https://qiniu.cqz21.top/%E5%8E%9F%E5%9E%8B%E9%93%BE1.JPG"}]
+      photoList: [] };
 
   },
   onLoad: function onLoad() {
@@ -119,6 +124,19 @@ var _default =
         method: "POST",
         success: function success(res) {
           console.log(res.data);
+        } });
+
+    },
+    chooseImg: function chooseImg() {
+      var that = this;
+      uni.chooseImage({
+        count: 9, //默认9
+        sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+        sourceType: ['album'], //从相册选择
+        success: function success(res) {
+          that.photoList = res.tempFilePaths;
+          // console.log(JSON.stringify(res.tempFilePaths));
+          // console.log(typeof(that.photoList));
         } });
 
     } } };exports.default = _default;
