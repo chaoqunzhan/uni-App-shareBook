@@ -70,6 +70,7 @@
 </template>
 
 <script>
+	import qiniuUploader from "@/components/qiniuUploader.js"
 	export default {
 		data() {
 			return {
@@ -84,7 +85,9 @@
 				// photoList:[{url:"https://qiniu.cqz21.top/%E5%8E%9F%E5%9E%8B2.JPG"},
 				// {url:"https://qiniu.cqz21.top/%E5%8E%9F%E5%9E%8B2.JPG"},
 				// {url:"https://qiniu.cqz21.top/%E5%8E%9F%E5%9E%8B%E9%93%BE1.JPG"}]
-				photoList:[]
+				photoList:[],
+				uploadToken:"",
+				imageURL:[]
 			}
 		},
 		onLoad() {
@@ -101,22 +104,91 @@
 				console.log('picker发送选择改变，携带值为', this.formData)
 			},
 			formSubmit: function(e){
-				console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value));
+				// console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value));
+				// 
+				// uni.request({				//上传表单
+				// 	url: 'http://192.168.1.154:3000/goodsUpload', //接口地址。
+				// 	data: {
+				// 		good:JSON.stringify(e.detail.value),
+				// 	},
+				// 	header: {
+				// 		'content-type':'application/json'//自定义请求头信息
+				// 	},
+				// 	method:"POST",
+				// 	success: (res) => {
+				// 		console.log(res.data);
+				// 	}
+				// });
 				
-				uni.request({				//上传表单
-					url: 'http://192.168.1.154:3000/goodsUpload', //接口地址。
+				uni.request({				//获取uploadToken
+					url: 'http://192.168.1.154:3000/goodsUpload/getToken', //接口地址。
 					data: {
-						good:JSON.stringify(e.detail.value),
+						
 					},
 					header: {
 						'content-type':'application/json'//自定义请求头信息
 					},
-					method:"POST",
+					method:"GET",
 					success: (res) => {
-						console.log(res.data);
+		
+						this.uploadToken = res.data.uploadToken;//接受后台返回的Token
+						console.log(this.uploadToken)
+						var that = this;
+						var imgURL = [];
+						
+						//构建Promise对象，实现
+						function uploadImg(){
+							var promise = new Promise(function (resolve, reject) {
+								for (var i=0; i<that.photoList.length; i++){
+									const filePath = that.photoList[i];
+									qiniuUploader.upload(filePath, (res) => {
+										imgURL.push(res.imageURL);
+										// console.log('that.imageURL: ' + that.imageURL);
+									}, (error) => {
+										console.log('error: ' + error);
+									}, {
+										region: 'ECN',
+										domain: 'https://qiniu.cqz21.top/',
+										key: 'xy_'+new Date()+i+'.jpg',
+										uploadURL:'https://up.qbox.me',
+										uptoken: that.uploadToken, // 由其他程序生成七牛 uptoken
+									})
+								}
+								that.imageURL = imgURL;
+								resolve(imgURL);
+							})
+							return promise;
+						}
+						
+						var uploadImg = uploadImg();
+						uploadImg.then(function(imgURL) { 
+							resolve:console.log("imageURL[0]:"+that.imageURL[0])
+							console.log(imgURL);
+							// console.log("imageURL:"+that.imageURL)
+							// console.log("imageURL[0]:"+that.imageURL[0])
+							console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value));
+							
+							uni.request({				//上传表单
+								url: 'http://192.168.1.154:3000/goodsUpload', //接口地址。
+								data: {
+									good:JSON.stringify(e.detail.value),
+									image:that.imageURL
+								},
+								header: {
+									'content-type':'application/json'//自定义请求头信息
+								},
+								method:"POST",
+								success: (res) => {
+									console.log(res.data);
+								}
+							});
+						})	
 					}
 				});
+				
+				
 			},
+			
 			chooseImg: function(){
 				var that = this;
 				uni.chooseImage({
