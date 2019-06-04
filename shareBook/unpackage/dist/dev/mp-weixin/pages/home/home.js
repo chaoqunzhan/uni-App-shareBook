@@ -68,6 +68,21 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
   },
   onLoad: function onLoad() {
+    wx.login({
+      success: function success(res) {
+        if (res.code) {
+          //发起网络请求
+          wx.request({
+            url: 'http://192.168.1.154:3000/goodsUser',
+            data: {
+              code: res.code } });
+
+
+          console.log("chengong" + res.code);
+        } else {
+          console.log('登录失败！' + res.errMsg);
+        }
+      } });
 
   },
   methods: {} };exports.default = _default;
