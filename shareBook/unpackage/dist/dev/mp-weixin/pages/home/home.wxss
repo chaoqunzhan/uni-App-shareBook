@@ -19,6 +19,19 @@
 	border-radius:75rpx;
 	margin:40rpx;
 	border:1px solid #fff;
+	over-flow:hidden;
+}
+.auth button{
+	/* font-size:20upx; */
+	line-height:75rpx;
+	width:150rpx;
+	height:150rpx;
+	border-radius:75rpx;
+}
+.me-avatar{
+	posotion:relatve;
+	width:150rpx;
+	height:150rpx;border-radius:75rpx;
 }
 .me-title{
 	-webkit-box-flex:1;
@@ -144,5 +157,7 @@
 	color:#808080;
 	margin-left:20rpx;
 }
+
+
 
 

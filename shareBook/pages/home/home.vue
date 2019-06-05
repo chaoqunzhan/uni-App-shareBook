@@ -1,7 +1,13 @@
 <template>
 	<view>
 		<view class="me">
-			<view class="me-photo"></view>
+			<view class="me-photo">
+				<!-- 登录授权 -->
+				<view class="auth" v-show="authShow">
+					<button open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="event1">点我登录</button>
+				</view>
+				<img class="me-avatar" :src="info.avatarUrl">
+			</view>
 			<view class="me-title">
 				<view class="me-title-name">小提群</view>
 				<view class="me-title-tag">
@@ -48,16 +54,44 @@
 </template>
 
 <script>
-	import shareNavBar from "../../components/share-nav-bar.vue"
+
 
 	export default {
-		components: {shareNavBar},
+
 		data() {
 			return {
-				title: 'buxing shareBook'
+				title: 'buxing shareBook',
+				authShow:true,
+				info:{
+					avatarUrl:"",
+					nickName:"",
+					gender:"",
+					city:""
+				}
+				//avaterUrl:"https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqY9MziaXicgpicqtLB6kKGYNE2LcffQ2jEvXmtgQsHsCtzpcEK7OxvFZWOLhnErL5rb5eiafd402DMnA/132"
 			}
 		},
+		
 		onLoad() {
+			// 可以通过 wx.getSetting 先查询一下用户是否授权了 "scope.record" 这个 scope
+			var that = this;
+			wx.getSetting({
+			  success(res) {
+				if (res.authSetting['scope.userInfo']) {
+				    that.authShow = false;
+					 // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+					wx.getUserInfo({
+						success: function(res) {
+							console.log(res.userInfo)
+							that.info = res.userInfo;
+						}
+					})
+				}else{
+					that.authShow = true;
+				}
+			  }
+			})
+			
 			wx.login({
 				success (res) {
 					if (res.code) {
@@ -76,7 +110,26 @@
 			})
 		},
 		methods: {
-
+			// authClick:function(){
+			// 	console.log("getIfno")
+			// 	wx.authorize({
+			// 	scope: 'scope.userInfo',
+			// 	success () {
+			// 	  // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
+			// 	  wx.getUserInfo()
+			// 	}
+			//   })
+			// },
+			authReject:function(){
+				console.log("reject");
+				this.authShow = false;
+			},
+			event1:function(e) {
+				console.log("为啥没有");
+				// console.log(e.detail.errMsg)
+				// console.log(e.detail.userInfo)
+				// console.log(e.detail.rawData)
+			}
 		}
 	}
 </script>
@@ -95,7 +148,21 @@
 	border-radius:75upx;
 	margin:40upx;
 	border:1px solid #fff;
+	over-flow:hidden;
 }
+.auth button{
+	/* font-size:20upx; */
+	line-height:75upx;
+	width:150upx;
+	height:150upx;
+	border-radius:75upx;
+}
+.me-avatar{
+	posotion:relatve;
+	width:150upx;
+	height:150upx;border-radius:75upx;
+}
+
 .me-title{
 	flex:1;
 	margin:40upx;
@@ -182,5 +249,7 @@
 	color:#808080;
 	margin-left:20upx;
 }
+
+
 
 </style>

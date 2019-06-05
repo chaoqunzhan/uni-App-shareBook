@@ -8,66 +8,100 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var shareNavBar = function shareNavBar() {return __webpack_require__.e(/*! import() | components/share-nav-bar */ "components/share-nav-bar").then(__webpack_require__.bind(null, /*! ../../components/share-nav-bar.vue */ "E:\\HTML\\uni-App-shareBook\\shareBook\\components\\share-nav-bar.vue"));};var _default =
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default =
 
 
 {
-  components: { shareNavBar: shareNavBar },
+
   data: function data() {
     return {
-      title: 'buxing shareBook' };
+      title: 'buxing shareBook',
+      authShow: true,
+      info: {
+        avatarUrl: "",
+        nickName: "",
+        gender: "",
+        city: ""
 
+        //avaterUrl:"https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqY9MziaXicgpicqtLB6kKGYNE2LcffQ2jEvXmtgQsHsCtzpcEK7OxvFZWOLhnErL5rb5eiafd402DMnA/132"
+      } };
   },
+
   onLoad: function onLoad() {
+    // 可以通过 wx.getSetting 先查询一下用户是否授权了 "scope.record" 这个 scope
+    var that = this;
+    wx.getSetting({
+      success: function success(res) {
+        if (res.authSetting['scope.userInfo']) {
+          that.authShow = false;
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+          wx.getUserInfo({
+            success: function success(res) {
+              console.log(res.userInfo);
+              that.info = res.userInfo;
+            } });
+
+        } else {
+          that.authShow = true;
+        }
+      } });
+
+
     wx.login({
       success: function success(res) {
         if (res.code) {
@@ -85,7 +119,27 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       } });
 
   },
-  methods: {} };exports.default = _default;
+  methods: {
+    // authClick:function(){
+    // 	console.log("getIfno")
+    // 	wx.authorize({
+    // 	scope: 'scope.userInfo',
+    // 	success () {
+    // 	  // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
+    // 	  wx.getUserInfo()
+    // 	}
+    //   })
+    // },
+    authReject: function authReject() {
+      console.log("reject");
+      this.authShow = false;
+    },
+    event1: function event1(e) {
+      console.log("为啥没有");
+      // console.log(e.detail.errMsg)
+      // console.log(e.detail.userInfo)
+      // console.log(e.detail.rawData)
+    } } };exports.default = _default;
 
 /***/ }),
 
