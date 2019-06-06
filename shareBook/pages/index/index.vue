@@ -31,16 +31,16 @@
 				</swiper>
 			</view>
 			<view class="item-mune">
-				<navigator url="navigate/navigate?title=navigate" hover-class="navigator-hover">
+				<navigator url="../../pages/list/list?id=1" hover-class="navigator-hover">
 					<img src="@/static/image/item-mune/shu_1.png" alt=""><p>课本</p>
                 </navigator>
-				<navigator url="navigate/navigate?title=navigate" hover-class="navigator-hover">
+				<navigator url="../../pages/list/list?id=2" hover-class="navigator-hover">
 					<img src="@/static/image/item-mune/IT.png" alt=""><p>IT</p>
 				</navigator>
-				<navigator url="navigate/navigate?title=navigate" hover-class="navigator-hover">
+				<navigator url="../../pages/list/list?id=3" hover-class="navigator-hover">
 					<img src="@/static/image/item-mune/zihangche.png" alt=""><p>自行车</p>
 				</navigator>
-				<navigator url="navigate/navigate?title=navigate" hover-class="navigator-hover">
+				<navigator url="../../pages/list/list?id=4" hover-class="navigator-hover">
 					<img src="@/static/image/item-mune/qita.png" alt=""><p>其他</p>
 				</navigator>
 			</view>

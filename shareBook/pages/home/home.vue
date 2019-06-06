@@ -4,15 +4,15 @@
 			<view class="me-photo">
 				<!-- 登录授权 -->
 				<view class="auth" v-show="authShow">
-					<button open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="event1">点我登录</button>
+					<button open-type="getUserInfo" lang="zh_CN" @getuserinfo="bindGetUserInfo">点我登录</button>
 				</view>
 				<img class="me-avatar" :src="info.avatarUrl">
 			</view>
 			<view class="me-title">
-				<view class="me-title-name">小提群</view>
+				<view class="me-title-name">{{info.nickName}}</view>
 				<view class="me-title-tag">
-					<img src="@/static/image/boy.png" width="100%" mode="widthFix">男
-					<img src="@/static/image/address.png" width="100%" mode="widthFix">北京
+					<img :src="info.genderUrl" width="100%" mode="widthFix">{{info.gender}}
+					<img src="@/static/image/address.png" width="100%" mode="widthFix">{{info.city}}
 				</view>
 			</view>
 		</view>
@@ -68,7 +68,6 @@
 					gender:"",
 					city:""
 				}
-				//avaterUrl:"https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqY9MziaXicgpicqtLB6kKGYNE2LcffQ2jEvXmtgQsHsCtzpcEK7OxvFZWOLhnErL5rb5eiafd402DMnA/132"
 			}
 		},
 		
@@ -84,6 +83,9 @@
 						success: function(res) {
 							console.log(res.userInfo)
 							that.info = res.userInfo;
+							var genderRes = that.setGender(that.info.gender);
+							that.info.gender = genderRes[0];
+							that.info.genderUrl = genderRes[1]; 
 						}
 					})
 				}else{
@@ -100,6 +102,17 @@
 							url: 'http://192.168.1.154:3000/goodsUser',
 							data: {
 							  code: res.code
+							},
+							success: (res) => {
+								console.log("openid:"+res.data.openid);
+								//本在储存状态
+								uni.setStorage({
+									key: 'openid',
+									data: res.data.openid,
+									success: function () {
+										console.log('success');
+									}
+								});
 							}
 						})
 					  console.log("chengong"+res.code)
@@ -110,25 +123,37 @@
 			})
 		},
 		methods: {
-			// authClick:function(){
-			// 	console.log("getIfno")
-			// 	wx.authorize({
-			// 	scope: 'scope.userInfo',
-			// 	success () {
-			// 	  // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
-			// 	  wx.getUserInfo()
-			// 	}
-			//   })
-			// },
-			authReject:function(){
+			authReject:function(e){
 				console.log("reject");
 				this.authShow = false;
 			},
-			event1:function(e) {
-				console.log("为啥没有");
-				// console.log(e.detail.errMsg)
-				// console.log(e.detail.userInfo)
-				// console.log(e.detail.rawData)
+			bindGetUserInfo: function(e) {
+				console.log(e.detail.userInfo)
+				if (e.detail.userInfo){
+					//用户按了允许授权按钮
+					this.info = e.detail.userInfo;
+					var genderRes = this.setGender(this.info.gender);
+					this.info.gender = genderRes[0];
+					this.info.genderUrl = genderRes[1]; 
+					this.authShow = false;
+					uni.showToast({
+						title: '完成登录',
+						duration: 2000
+					});
+				} else {
+				  //用户按了拒绝按钮
+				}
+			},
+			setGender: function(gender){
+				var genderUrl;
+				if(gender == 1){
+					gender = "男"; 
+					genderUrl = "../../static/image/boy.png";
+				}else{
+					gender = "女"; 
+					genderUrl = "../../static/image/girl.png";
+				}
+				return [gender,genderUrl];
 			}
 		}
 	}

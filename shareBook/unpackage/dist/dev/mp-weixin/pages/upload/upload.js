@@ -151,45 +151,46 @@ var _qiniuUploader = _interopRequireDefault(__webpack_require__(/*! @/components
 //
 //
 //
-var _default = { data: function data() {return { title: 'buxing shareBook', formData: { title: "" }, sortArray: ["课本", "IT", "自行车", "其他"], sortDefault: 0, ageArray: ["小于一个月", "小于六个月", "小于一年", "小于三年", "其他"], ageDefault: 0, // photoList:[{url:"https://qiniu.cqz21.top/%E5%8E%9F%E5%9E%8B2.JPG"},
-      // {url:"https://qiniu.cqz21.top/%E5%8E%9F%E5%9E%8B2.JPG"},
-      // {url:"https://qiniu.cqz21.top/%E5%8E%9F%E5%9E%8B%E9%93%BE1.JPG"}]
-      photoList: [], uploadToken: "", imageURL: [] };}, onLoad: function onLoad() {}, methods: { bindPickerSort: function bindPickerSort(e) {this.sortDefault = e.target.value;this.formData.sort = this.sortArray[e.target.value];}, bindPickerAge: function bindPickerAge(e) {this.ageDefault = e.target.value;this.formData.age = this.ageArray[e.target.value];console.log('picker发送选择改变，携带值为', this.formData);}, formSubmit: function formSubmit(e) {var _this = this; // console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value));
-      // 
-      // uni.request({				//上传表单
-      // 	url: 'http://192.168.1.154:3000/goodsUpload', //接口地址。
-      // 	data: {
-      // 		good:JSON.stringify(e.detail.value),
-      // 	},
-      // 	header: {
-      // 		'content-type':'application/json'//自定义请求头信息
-      // 	},
-      // 	method:"POST",
-      // 	success: (res) => {
-      // 		console.log(res.data);
-      // 	}
-      // });
-      uni.request({ //获取uploadToken
-        url: 'http://192.168.1.154:3000/goodsUpload/getToken', //接口地址。
-        data: {}, header: { 'content-type': 'application/json' //自定义请求头信息
-        }, method: "GET", success: function success(res) {_this.uploadToken = res.data.uploadToken; //接受后台返回的Token
-          // console.log(this.uploadToken)
-          var that = _this; //构建Promise对象，实现
-          var promise = [];for (var i = 0; i < that.photoList.length; i++) {promise[i] = new Promise(function (resolve, reject) {// var imgURL;
-              var filePath = that.photoList[i];_qiniuUploader.default.upload(filePath, function (res) {resolve(res.imageURL);}, function (error) {console.log('error: ' + error);}, { region: 'ECN', domain: 'https://qiniu.cqz21.top/', key: 'xy_' + new Date() + i + '.jpg', uploadURL: 'https://up.qbox.me', uptoken: that.uploadToken // 由其他程序生成七牛 uptoken
-              });});}Promise.all(promise).then(function (imgURL) {console.log('imgURL:', imgURL);console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value));uni.request({ //上传表单
-              url: 'http://192.168.1.154:3000/goodsUpload', //接口地址。
-              data: { good: JSON.stringify(e.detail.value), image: imgURL }, header: { 'content-type': 'application/json' //自定义请求头信息
-              }, method: "POST",
-              success: function success(res) {
-                console.log(res.data);
-              } });
+var _default = { data: function data() {return { title: 'buxing shareBook', formData: { title: "" }, sortArray: ["课本", "IT", "自行车", "其他"], sortDefault: 0, ageArray: ["小于一个月", "小于六个月", "小于一年", "小于三年", "其他"], ageDefault: 0, photoList: [], uploadToken: "", imageURL: [] };}, onLoad: function onLoad() {try {var value = uni.getStorageSync('openid');if (value) {console.log(value);} else {this.loginAlert();}} catch (e) {// error
+      console.log("err!!!");}}, methods: { bindPickerSort: function bindPickerSort(e) {this.sortDefault = e.target.value;this.formData.sort = this.sortArray[e.target.value];}, bindPickerAge: function bindPickerAge(e) {this.ageDefault = e.target.value;this.formData.age = this.ageArray[e.target.value]; //console.log('picker发送选择改变，携带值为', this.formData)
+    }, formSubmit: function formSubmit(e) {var _this = this;try {//判断是否登录
+        var value = uni.getStorageSync('openid');if (!value) {this.loginAlert();} else {uni.request({ //获取uploadToken
+            url: 'http://192.168.1.154:3000/goodsUpload/getToken', //接口地址。
+            data: {}, header: { 'content-type': 'application/json' //自定义请求头信息
+            }, method: "GET", success: function success(res) {_this.uploadToken = res.data.uploadToken; //接受后台返回的Token
+              // console.log(this.uploadToken)
+              var that = _this; //构建Promise对象，实现
+              var promise = [];for (var i = 0; i < that.photoList.length; i++) {promise[i] = new Promise(function (resolve, reject) {// var imgURL;
+                  var filePath = that.photoList[i];_qiniuUploader.default.upload(filePath, function (res) {resolve(res.imageURL);}, function (error) {console.log('error: ' + error);}, { region: 'ECN', domain: 'https://qiniu.cqz21.top/', key: 'xy_' + new Date() + i + '.jpg', uploadURL: 'https://up.qbox.me', uptoken: that.uploadToken // 由其他程序生成七牛 uptoken
+                  });});}Promise.all(promise).then(function (imgURL) {//console.log('imgURL:', imgURL);
 
-          });
-        } });
+                //console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value));
 
+                uni.request({ //上传表单
+                  url: 'http://192.168.1.154:3000/goodsUpload', //接口地址。
+                  data: {
+                    good: JSON.stringify(e.detail.value),
+                    image: imgURL },
 
+                  header: {
+                    'content-type': 'application/json' //自定义请求头信息
+                  },
+                  method: "POST",
+                  success: function success(res) {
+                    //console.log(res.data);
+                    uni.showToast({
+                      title: '提交成功',
+                      duration: 2000 });
 
+                  } });
+
+              });
+            } });
+
+        }
+      } catch (e) {
+        // error
+      }
     },
 
     chooseImg: function chooseImg() {
@@ -202,6 +203,19 @@ var _default = { data: function data() {return { title: 'buxing shareBook', form
           that.photoList = res.tempFilePaths;
           // console.log(JSON.stringify(res.tempFilePaths));
           // console.log(typeof(that.photoList));
+        } });
+
+    },
+
+    loginAlert: function loginAlert() {
+      uni.showModal({
+        title: '提示',
+        content: '您还未登录!!!请先在“个人”中完成登录',
+        showCancel: false,
+        success: function success(res) {
+          if (res.confirm) {
+            console.log('用户点击确定');
+          }
         } });
 
     } } };exports.default = _default;

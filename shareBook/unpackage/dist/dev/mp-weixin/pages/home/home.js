@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -76,10 +76,9 @@ var _default =
         avatarUrl: "",
         nickName: "",
         gender: "",
-        city: ""
+        city: "" } };
 
-        //avaterUrl:"https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqY9MziaXicgpicqtLB6kKGYNE2LcffQ2jEvXmtgQsHsCtzpcEK7OxvFZWOLhnErL5rb5eiafd402DMnA/132"
-      } };
+
   },
 
   onLoad: function onLoad() {
@@ -94,6 +93,9 @@ var _default =
             success: function success(res) {
               console.log(res.userInfo);
               that.info = res.userInfo;
+              var genderRes = that.setGender(that.info.gender);
+              that.info.gender = genderRes[0];
+              that.info.genderUrl = genderRes[1];
             } });
 
         } else {
@@ -109,8 +111,19 @@ var _default =
           wx.request({
             url: 'http://192.168.1.154:3000/goodsUser',
             data: {
-              code: res.code } });
+              code: res.code },
 
+            success: function success(res) {
+              console.log("openid:" + res.data.openid);
+              //本在储存状态
+              uni.setStorage({
+                key: 'openid',
+                data: res.data.openid,
+                success: function success() {
+                  console.log('success');
+                } });
+
+            } });
 
           console.log("chengong" + res.code);
         } else {
@@ -120,26 +133,39 @@ var _default =
 
   },
   methods: {
-    // authClick:function(){
-    // 	console.log("getIfno")
-    // 	wx.authorize({
-    // 	scope: 'scope.userInfo',
-    // 	success () {
-    // 	  // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
-    // 	  wx.getUserInfo()
-    // 	}
-    //   })
-    // },
-    authReject: function authReject() {
+    authReject: function authReject(e) {
       console.log("reject");
       this.authShow = false;
     },
-    event1: function event1(e) {
-      console.log("为啥没有");
-      // console.log(e.detail.errMsg)
-      // console.log(e.detail.userInfo)
-      // console.log(e.detail.rawData)
+    bindGetUserInfo: function bindGetUserInfo(e) {
+      console.log(e.detail.userInfo);
+      if (e.detail.userInfo) {
+        //用户按了允许授权按钮
+        this.info = e.detail.userInfo;
+        var genderRes = this.setGender(this.info.gender);
+        this.info.gender = genderRes[0];
+        this.info.genderUrl = genderRes[1];
+        this.authShow = false;
+        uni.showToast({
+          title: '完成登录',
+          duration: 2000 });
+
+      } else {
+        //用户按了拒绝按钮
+      }
+    },
+    setGender: function setGender(gender) {
+      var genderUrl;
+      if (gender == 1) {
+        gender = "男";
+        genderUrl = "../../static/image/boy.png";
+      } else {
+        gender = "女";
+        genderUrl = "../../static/image/girl.png";
+      }
+      return [gender, genderUrl];
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 
@@ -169,25 +195,23 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var m0 = __webpack_require__(/*! @/static/image/boy.png */ "E:\\HTML\\uni-App-shareBook\\shareBook\\static\\image\\boy.png")
+  var m0 = __webpack_require__(/*! @/static/image/address.png */ "E:\\HTML\\uni-App-shareBook\\shareBook\\static\\image\\address.png")
 
-  var m1 = __webpack_require__(/*! @/static/image/address.png */ "E:\\HTML\\uni-App-shareBook\\shareBook\\static\\image\\address.png")
+  var m1 = __webpack_require__(/*! @/static/image/爱心.png */ "E:\\HTML\\uni-App-shareBook\\shareBook\\static\\image\\爱心.png")
 
-  var m2 = __webpack_require__(/*! @/static/image/爱心.png */ "E:\\HTML\\uni-App-shareBook\\shareBook\\static\\image\\爱心.png")
+  var m2 = __webpack_require__(/*! @/static/image/箭头.png */ "E:\\HTML\\uni-App-shareBook\\shareBook\\static\\image\\箭头.png")
 
-  var m3 = __webpack_require__(/*! @/static/image/箭头.png */ "E:\\HTML\\uni-App-shareBook\\shareBook\\static\\image\\箭头.png")
+  var m3 = __webpack_require__(/*! @/static/image/上传.png */ "E:\\HTML\\uni-App-shareBook\\shareBook\\static\\image\\上传.png")
 
-  var m4 = __webpack_require__(/*! @/static/image/上传.png */ "E:\\HTML\\uni-App-shareBook\\shareBook\\static\\image\\上传.png")
+  var m4 = __webpack_require__(/*! @/static/image/箭头.png */ "E:\\HTML\\uni-App-shareBook\\shareBook\\static\\image\\箭头.png")
 
-  var m5 = __webpack_require__(/*! @/static/image/箭头.png */ "E:\\HTML\\uni-App-shareBook\\shareBook\\static\\image\\箭头.png")
+  var m5 = __webpack_require__(/*! @/static/image/消息.png */ "E:\\HTML\\uni-App-shareBook\\shareBook\\static\\image\\消息.png")
 
-  var m6 = __webpack_require__(/*! @/static/image/消息.png */ "E:\\HTML\\uni-App-shareBook\\shareBook\\static\\image\\消息.png")
+  var m6 = __webpack_require__(/*! @/static/image/箭头.png */ "E:\\HTML\\uni-App-shareBook\\shareBook\\static\\image\\箭头.png")
 
-  var m7 = __webpack_require__(/*! @/static/image/箭头.png */ "E:\\HTML\\uni-App-shareBook\\shareBook\\static\\image\\箭头.png")
+  var m7 = __webpack_require__(/*! @/static/image/通知.png */ "E:\\HTML\\uni-App-shareBook\\shareBook\\static\\image\\通知.png")
 
-  var m8 = __webpack_require__(/*! @/static/image/通知.png */ "E:\\HTML\\uni-App-shareBook\\shareBook\\static\\image\\通知.png")
-
-  var m9 = __webpack_require__(/*! @/static/image/箭头.png */ "E:\\HTML\\uni-App-shareBook\\shareBook\\static\\image\\箭头.png")
+  var m8 = __webpack_require__(/*! @/static/image/箭头.png */ "E:\\HTML\\uni-App-shareBook\\shareBook\\static\\image\\箭头.png")
 
   _vm.$mp.data = Object.assign(
     {},
@@ -201,8 +225,7 @@ var render = function() {
         m5: m5,
         m6: m6,
         m7: m7,
-        m8: m8,
-        m9: m9
+        m8: m8
       }
     }
   )

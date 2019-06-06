@@ -20,6 +20,12 @@
 			"style": {
 				"navigationBarTitleText": "detail"
 			}
+		},
+		{
+			"path": "pages/list/list",
+			"style": {
+				"navigationBarTitleText": "list"
+			}
 		}
 	],
 	"globalStyle": {
