@@ -42,7 +42,7 @@
 				<view class="uni-list-sort">
 					<view class="uni-list-sort-left"><img src="@/static/image/item-mune/phone.png" width="100%" mode="widthFix"></view>
 					<view class="uni-list-middle">:</view>
-					<input name="phone" class="uni-list-sort-db" type="number" placeholder="(必填)联系电话" />
+					<input name="phone" class="uni-list-sort-db" type="number" placeholder="(必填)联系电话" maxlength="11"/>
 				</view>
 				
 				<view class="uni-list-sort">
@@ -89,9 +89,9 @@
 		},
 		onLoad() {
 			try {
-				const value = uni.getStorageSync('openid');
-				if (value) {
-					console.log(value);
+				const openid = uni.getStorageSync('openid');
+				if (openid) {
+					console.log(openid);
 				}else{
 					this.loginAlert();
 				}
@@ -111,75 +111,106 @@
 				//console.log('picker发送选择改变，携带值为', this.formData)
 			},
 			formSubmit: function(e){
-				try {//判断是否登录
-					const value = uni.getStorageSync('openid');
-					if (!value) {
-						this.loginAlert();
-					}else{
-						uni.request({				//获取uploadToken
-							url: 'http://192.168.1.154:3000/goodsUpload/getToken', //接口地址。
-							data: {
-							},
-							header: {
-								'content-type':'application/json'//自定义请求头信息
-							},
-							method:"GET",
-							success: (res) => {
-								
-								this.uploadToken = res.data.uploadToken;//接受后台返回的Token
-								// console.log(this.uploadToken)
-								var that = this;
-								
-								
-								//构建Promise对象，实现
-								var promise=[];
-								for (var i=0; i<that.photoList.length; i++){
-									promise[i] = new Promise(function (resolve, reject) {
-										// var imgURL;
-										const filePath = that.photoList[i];
-										qiniuUploader.upload(filePath, (res) => {
-											resolve(res.imageURL);
-										}, (error) => {
-											console.log('error: ' + error);
-										}, {
-											region: 'ECN',
-											domain: 'https://qiniu.cqz21.top/',
-											key: 'xy_'+new Date()+i+'.jpg',
-											uploadURL:'https://up.qbox.me',
-											uptoken: that.uploadToken, // 由其他程序生成七牛 uptoken
+				
+				//校验表单
+				var formData = e.detail.value;
+				console.log('formData:'+formData.title);
+				if (formData.title == ''){
+					uni.showToast({
+						title: '请输入物品名称',
+						duration: 2000
+					});
+				}else if(formData.value == ''){
+					uni.showToast({
+						title: '请输入物品价格',
+						duration: 2000
+					});
+				}else if(formData.phone == ''){
+					uni.showToast({
+						title: '请输入电话号码',
+						duration: 2000
+					});
+				}else if(formData.address == ''){
+					uni.showToast({
+						title: '请输入交易地址',
+						duration: 2000
+					});
+				}else{
+					try {//判断是否登录
+						const openid = uni.getStorageSync('openid');
+						if (!openid) {
+							this.loginAlert();
+						}else{
+							uni.request({				//获取uploadToken
+								url: 'http://192.168.1.154:3000/goodsUpload/getToken', //接口地址。
+								data: {
+								},
+								header: {
+									'content-type':'application/json'//自定义请求头信息
+								},
+								method:"GET",
+								success: (res) => {
+									
+									this.uploadToken = res.data.uploadToken;//接受后台返回的Token
+									// console.log(this.uploadToken)
+									var that = this;
+									
+									
+									//构建Promise对象，实现
+									var promise=[];
+									for (var i=0; i<that.photoList.length; i++){
+										promise[i] = new Promise(function (resolve, reject) {
+											// var imgURL;
+											const filePath = that.photoList[i];
+											qiniuUploader.upload(filePath, (res) => {
+												resolve(res.imageURL);
+											}, (error) => {
+												console.log('error: ' + error);
+											}, {
+												region: 'ECN',
+												domain: 'https://qiniu.cqz21.top/',
+												key: 'shareBook-'+openid+'-'+new Date().toJSON()+'-'+i+'.jpg',
+												uploadURL:'https://up.qbox.me',
+												uptoken: that.uploadToken, // 由其他程序生成七牛 uptoken
+											})
 										})
-									})
-								}
-									
-								Promise.all(promise).then((imgURL) => {
-									//console.log('imgURL:', imgURL);
-									
-									//console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value));
-									
-									uni.request({				//上传表单
-										url: 'http://192.168.1.154:3000/goodsUpload', //接口地址。
-										data: {
-											good:JSON.stringify(e.detail.value),
-											image:imgURL
-										},
-										header: {
-											'content-type':'application/json'//自定义请求头信息
-										},
-										method:"POST",
-										success: (res) => {
-											//console.log(res.data);
+									}
+										
+									Promise.all(promise).then((imgURL) => {
+										if(imgURL == ''){
 											uni.showToast({
-												title: '提交成功',
+												title: '请上传物品照片！',
 												duration: 2000
 											});
+										}else{
+											uni.request({				//上传表单
+												url: 'http://192.168.1.154:3000/goodsUpload', //接口地址。
+												data: {
+													good:JSON.stringify(e.detail.value),
+													image:imgURL,
+													openid:openid
+												},
+												header: {
+													'content-type':'application/json'//自定义请求头信息
+												},
+												method:"POST",
+												success: (res) => {
+													//console.log(res.data);
+													uni.showToast({
+														title: '提交成功',
+														duration: 2000
+													});
+													
+												}
+											});
 										}
-									});
-								})	
-							}
-						});
+									})	
+								}
+							});
+						}
+					} catch (e) {
+						// error
 					}
-				} catch (e) {
-					// error
 				}
 			},
 			
@@ -204,6 +235,8 @@
 					showCancel:false,
 					success: function (res) {
 						if (res.confirm) {
+							
+							//console.log(date);
 							console.log('用户点击确定');
 						}
 					}

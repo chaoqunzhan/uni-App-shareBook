@@ -128,7 +128,7 @@
 				this.authShow = false;
 			},
 			bindGetUserInfo: function(e) {
-				console.log(e.detail.userInfo)
+				console.log("怎么了:"+e.detail.userInfo)
 				if (e.detail.userInfo){
 					//用户按了允许授权按钮
 					this.info = e.detail.userInfo;
