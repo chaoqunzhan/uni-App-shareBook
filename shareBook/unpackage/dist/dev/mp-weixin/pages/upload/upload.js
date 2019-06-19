@@ -151,14 +151,21 @@ var _qiniuUploader = _interopRequireDefault(__webpack_require__(/*! @/components
 //
 //
 //
-var _default = { data: function data() {return { title: 'buxing shareBook', formData: { title: "" }, sortArray: ["课本", "IT", "自行车", "其他"], sortDefault: 0, ageArray: ["小于一个月", "小于六个月", "小于一年", "小于三年", "其他"], ageDefault: 0, photoList: [], uploadToken: "", imageURL: [] };}, onLoad: function onLoad() {try {var openid = uni.getStorageSync('openid');if (openid) {console.log(openid);} else {this.loginAlert();}} catch (e) {// error
+var _default = { data: function data() {return { title: 'buxing shareBook', formData: { title: "" }, sortArray: ["课本", "IT", "自行车", "其他"], sortDefault: 0, ageArray: ["小于一个月", "小于六个月", "小于一年", "小于三年", "其他"], ageDefault: 0, titleDefault: '', valueDefault: null, describeDefault: '', photoList: [], uploadToken: "", imageURL: [] };}, onLoad: function onLoad() {try {var openid = uni.getStorageSync('openid');if (openid) {console.log(openid);} else {this.loginAlert();}} catch (e) {// error
       console.log("err!!!");}}, methods: { bindPickerSort: function bindPickerSort(e) {this.sortDefault = e.target.value;this.formData.sort = this.sortArray[e.target.value];}, bindPickerAge: function bindPickerAge(e) {this.ageDefault = e.target.value;this.formData.age = this.ageArray[e.target.value]; //console.log('picker发送选择改变，携带值为', this.formData)
-    }, formSubmit: function formSubmit(e) {var _this = this; //校验表单
+    }, formSubmit: function formSubmit(e) {var _this = this;var that = this; //校验表单
       var formData = e.detail.value;console.log('formData:' + formData.title);if (formData.title == '') {uni.showToast({ title: '请输入物品名称', duration: 2000 });} else if (formData.value == '') {uni.showToast({ title: '请输入物品价格', duration: 2000 });} else if (formData.phone == '') {uni.showToast({ title: '请输入电话号码', duration: 2000 });} else if (formData.address == '') {uni.showToast({ title: '请输入交易地址', duration: 2000 });} else {try {//判断是否登录
-          var openid = uni.getStorageSync('openid');if (!openid) {this.loginAlert();} else {uni.request({ //获取uploadToken
+          var openid = uni.getStorageSync('openid');if (!openid) {
+            this.loginAlert();
+          } else {
+            uni.request({ //获取uploadToken
               url: 'http://192.168.1.154:3000/goodsUpload/getToken', //接口地址。
-              data: {}, header: { 'content-type': 'application/json' //自定义请求头信息
-              }, method: "GET",
+              data: {},
+
+              header: {
+                'content-type': 'application/json' //自定义请求头信息
+              },
+              method: "GET",
               success: function success(res) {
 
                 _this.uploadToken = res.data.uploadToken; //接受后台返回的Token
@@ -187,6 +194,7 @@ var _default = { data: function data() {return { title: 'buxing shareBook', form
                 }
 
                 Promise.all(promise).then(function (imgURL) {
+                  // 校验图片是否上传
                   if (imgURL == '') {
                     uni.showToast({
                       title: '请上传物品照片！',
@@ -206,9 +214,48 @@ var _default = { data: function data() {return { title: 'buxing shareBook', form
                       method: "POST",
                       success: function success(res) {
                         //console.log(res.data);
-                        uni.showToast({
+                        // uni.showToast({
+                        // 	title: '提交成功',
+                        // 	duration: 2000
+                        // });
+                        // uni.showActionSheet({
+                        // 	itemList: ['A', 'B', 'C'],
+                        // 	success: function (res) {
+                        // 		console.log('选中了第' + (res.tapIndex + 1) + '个按钮');
+                        // 	},
+                        // 	fail: function (res) {
+                        // 		console.log(res.errMsg);
+                        // 	}
+                        // });
+                        uni.showModal({
                           title: '提交成功',
-                          duration: 2000 });
+                          content: '点击确认，继续提交\n点击取消，跳转首页',
+                          success: function success(res) {
+                            if (res.confirm) {
+                              console.log('用户点击确定');
+                              that.sortDefault = 0;
+                              that.ageDefault = 0;
+                              that.titleDefault = ' ';
+                              that.valueDefault = ' ';
+                              that.describeDefault = ' ';
+                              that.photoList = [];
+
+                              console.log(formData.title);
+                              formData.title = '';
+
+                            } else if (res.cancel) {
+                              console.log('用户点击取消');
+                              that.sortDefault = 0;
+                              that.ageDefault = 0;
+                              that.titleDefault = ' ';
+                              that.valueDefault = ' ';
+                              that.describeDefault = ' ';
+                              that.photoList = [];
+                              uni.switchTab({
+                                url: '/pages/index/index' });
+
+                            }
+                          } });
 
 
                       } });

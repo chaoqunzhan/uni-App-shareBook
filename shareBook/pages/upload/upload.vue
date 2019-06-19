@@ -29,13 +29,13 @@
 				<view class="uni-list-sort">
 					<view class="uni-list-sort-left">物品名称</view>
 					<view class="uni-list-middle">|</view>
-					<input name="title" class="uni-list-sort-db" maxlength="20" placeholder="(必填)最长输入为20" />
+					<input name="title" :value="titleDefault" class="uni-list-sort-db" maxlength="20" placeholder="(必填)最长输入为20" />
 				</view>
 				
 				<view class="uni-list-sort">
 					<view class="uni-list-sort-left">期望价格</view>
 					<view class="uni-list-middle">|</view>
-					<input name="value" class="uni-list-sort-db" type="number" placeholder="单位:元" />
+					<input name="value" :value="valueDefault" class="uni-list-sort-db" type="number" placeholder="单位:元" />
 				</view>
 				<view class="list-guodu"></view>
 				
@@ -48,13 +48,13 @@
 				<view class="uni-list-sort">
 					<view class="uni-list-sort-left"><img src="@/static/image/item-mune/address.png" width="100%" mode="widthFix"></view>
 					<view class="uni-list-middle">:</view>
-					<input name="address" class="uni-list-sort-db" type="number" placeholder="地址" />
+					<input name="address" class="uni-list-sort-db" placeholder="地址" />
 				</view>
 				<view class="list-guodu"></view>
 				
 				<view class="uni-list-sort">
 					<view class="uni-list-sort-db">
-						<textarea name="describe" placeholder-style="color:#808080" placeholder="(少于200字)输入物品描述,并上传照片"/>
+						<textarea name="describe" :value="describeDefault" placeholder-style="color:#808080" placeholder="(少于200字)输入物品描述,并上传照片"/>
 					</view>
 				</view>
 				
@@ -82,6 +82,9 @@
 				sortDefault:0,
 				ageArray:["小于一个月","小于六个月","小于一年","小于三年","其他"],
 				ageDefault:0,
+				titleDefault:'',
+				valueDefault:null,
+				describeDefault:'',
 				photoList:[],
 				uploadToken:"",
 				imageURL:[]
@@ -112,6 +115,7 @@
 			},
 			formSubmit: function(e){
 				
+				var that = this;
 				//校验表单
 				var formData = e.detail.value;
 				console.log('formData:'+formData.title);
@@ -136,6 +140,9 @@
 						duration: 2000
 					});
 				}else{
+					
+					
+					
 					try {//判断是否登录
 						const openid = uni.getStorageSync('openid');
 						if (!openid) {
@@ -177,6 +184,7 @@
 									}
 										
 									Promise.all(promise).then((imgURL) => {
+										// 校验图片是否上传
 										if(imgURL == ''){
 											uni.showToast({
 												title: '请上传物品照片！',
@@ -196,9 +204,48 @@
 												method:"POST",
 												success: (res) => {
 													//console.log(res.data);
-													uni.showToast({
+													// uni.showToast({
+													// 	title: '提交成功',
+													// 	duration: 2000
+													// });
+													// uni.showActionSheet({
+													// 	itemList: ['A', 'B', 'C'],
+													// 	success: function (res) {
+													// 		console.log('选中了第' + (res.tapIndex + 1) + '个按钮');
+													// 	},
+													// 	fail: function (res) {
+													// 		console.log(res.errMsg);
+													// 	}
+													// });
+													uni.showModal({
 														title: '提交成功',
-														duration: 2000
+														content: '点击确认，继续提交\n点击取消，跳转首页',
+														success: function (res) {
+															if (res.confirm) {
+																console.log('用户点击确定');
+																	that.sortDefault = 0;
+																	that.ageDefault = 0;
+																	that.titleDefault = ' ';
+																	that.valueDefault = ' ';
+																	that.describeDefault = ' ';
+																	that.photoList = [];
+																	
+																console.log(formData.title);
+																formData.title = '';
+																
+															} else if (res.cancel) {
+																console.log('用户点击取消');
+																that.sortDefault = 0;
+																that.ageDefault = 0;
+																that.titleDefault = ' ';
+																that.valueDefault = ' ';
+																that.describeDefault = ' ';
+																that.photoList = [];
+																uni.switchTab({
+																	url: '/pages/index/index'
+																});
+															}
+														}
 													});
 													
 												}

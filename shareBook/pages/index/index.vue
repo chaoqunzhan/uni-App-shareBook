@@ -48,10 +48,10 @@
 				<view class="list-left">
 					<view class="card" v-for="(item,index) in cardListLeft">
 						<navigator url="../../pages/detail/detail?id=1" hover-class="navigator-hover">
-							<img :src="item.cardImg" alt="" mode="widthFix" width="100%" @load="onImageLoad">
+							<img :src="item.image[0]" alt="" mode="widthFix" width="100%" @load="onImageLoad">
 							<view class="card-text">
-								<h2>{{item.cardTitle}}</h2>
-								<p>{{item.cardText}}</p>
+								<h2>{{item.title}}</h2>
+								<p>{{item.describe}}</p>
 							</view>
 						</navigator>
 					</view>
@@ -59,10 +59,10 @@
 				<view class="list-right">
 					<view class="card" v-for="(item,index) in cardListRight">
 						<navigator url="../../pages/detail/detail?id=1" hover-class="navigator-hover">
-							<img :src="item.cardImg" alt="" mode="widthFix" width="100%" @load="onImageLoad">
+							<img :src="item.image[0]" alt="" mode="widthFix" width="100%" @load="onImageLoad">
 							<view class="card-text">
-								<h2>{{item.cardTitle}}</h2>
-								<p>{{item.cardText}}</p>
+								<h2>{{item.title}}</h2>
+								<p>{{item.describe}}</p>
 							</view>
 						</navigator>
 					</view>
@@ -87,55 +87,55 @@
 				},
 				
 				animationData: {},
-				allcardList:[{
-					cardImg:"../../static/image/sample/sample1.jpg",
-					cardTitle:"我是第一张图片",
-					cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
-				},{
-					cardImg:"https://qiniu.cqz21.top/sample1.jpg",
-					cardTitle:"我是第二张图片",
-					cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
-				},{
-					cardImg:"../../static/image/sample/sample5.jpg",
-					cardTitle:"我是第三张图片",
-					cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
-				},{
-					cardImg:"../../static/image/sample/sample2.jpg",
-					cardTitle:"我是第四张图片",
-					cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
-				},{
-					cardImg:"../../static/image/sample/sample3.jpg",
-					cardTitle:"我是第五张图片",
-					cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
-				},{
-					cardImg:"../../static/image/sample/sample6.jpg",
-					cardTitle:"我是第六张图片",
-					cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
-				},{
-					cardImg:"../../static/image/sample/sample7.jpg",
-					cardTitle:"我是第七张图片",
-					cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
-				},{
-					cardImg:"../../static/image/sample/sample8.jpg",
-					cardTitle:"我是第八张图片",
-					cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
-				},{
-					cardImg:"../../static/image/sample/sample9.jpg",
-					cardTitle:"我是第九张图片",
-					cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
-				},{
-					cardImg:"../../static/image/sample/sample10.jpg",
-					cardTitle:"我是第十张图片",
-					cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
-				},{
-					cardImg:"../../static/image/sample/sample11.jpg",
-					cardTitle:"我是第十一张图片",
-					cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
-				},{
-					cardImg:"../../static/image/sample/sample12.jpg",
-					cardTitle:"我是第十二张图片",
-					cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
-				}],
+				// allcardList:[{
+				// 	cardImg:"../../static/image/sample/sample1.jpg",
+				// 	cardTitle:"我是第一张图片",
+				// 	cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
+				// },{
+				// 	cardImg:"https://qiniu.cqz21.top/sample1.jpg",
+				// 	cardTitle:"我是第二张图片",
+				// 	cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
+				// },{
+				// 	cardImg:"../../static/image/sample/sample5.jpg",
+				// 	cardTitle:"我是第三张图片",
+				// 	cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
+				// },{
+				// 	cardImg:"../../static/image/sample/sample2.jpg",
+				// 	cardTitle:"我是第四张图片",
+				// 	cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
+				// },{
+				// 	cardImg:"../../static/image/sample/sample3.jpg",
+				// 	cardTitle:"我是第五张图片",
+				// 	cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
+				// },{
+				// 	cardImg:"../../static/image/sample/sample6.jpg",
+				// 	cardTitle:"我是第六张图片",
+				// 	cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
+				// },{
+				// 	cardImg:"../../static/image/sample/sample7.jpg",
+				// 	cardTitle:"我是第七张图片",
+				// 	cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
+				// },{
+				// 	cardImg:"../../static/image/sample/sample8.jpg",
+				// 	cardTitle:"我是第八张图片",
+				// 	cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
+				// },{
+				// 	cardImg:"../../static/image/sample/sample9.jpg",
+				// 	cardTitle:"我是第九张图片",
+				// 	cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
+				// },{
+				// 	cardImg:"../../static/image/sample/sample10.jpg",
+				// 	cardTitle:"我是第十张图片",
+				// 	cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
+				// },{
+				// 	cardImg:"../../static/image/sample/sample11.jpg",
+				// 	cardTitle:"我是第十一张图片",
+				// 	cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
+				// },{
+				// 	cardImg:"../../static/image/sample/sample12.jpg",
+				// 	cardTitle:"我是第十二张图片",
+				// 	cardText:"来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊来见识我的瀑布流啊"
+				// }],
 				cardListLeft:[],		//用来储存左栏的card
 				cardListRight:[],		//用来储存右栏的card
 				cardLeftHeight:0,
@@ -236,15 +236,37 @@
 			},
 			
 			waterfall: function(){
-				this.cardList = this.allcardList.slice(0,4);		//初始化图片显示
-				this.cardListLeft.push(this.cardList[0]);
-				this.preLoadImg = this.cardList[0].cardImg;
+				// 用promise获取数据
 				var that = this;
-				uni.getSystemInfo({		//利用uni-APP获取系统信息Api，获取客户端的屏幕高度，设置成scoll-view的高度，实现触底事件
-					success: function (res) {
-						that.contentH = res.windowHeight;
-					},
-				});
+				var promise = new Promise(function(resolve,reject){
+					uni.request({
+						url: 'http://192.168.1.154:3000/goodsList/', //仅为示例，并非真实接口地址。
+						data: {
+							item: that.cardListItem
+						},
+						header: {
+							'content-type':'application/json' //自定义请求头信息
+						},
+						method:"GET",
+						success: (res) => {
+							console.log(res.data.result);
+							resolve(res.data.result.list);
+						}
+					});
+				})
+				promise.then((res)=>{
+					console.log("数据："+res);
+					//this.cardList = this.allcardList.slice(0,4);		//初始化图片显示
+					this.cardList = res;
+					this.cardListLeft.push(this.cardList[0]);
+					this.preLoadImg = this.cardList[0].image[0];
+					var that = this;
+					uni.getSystemInfo({		//利用uni-APP获取系统信息Api，获取客户端的屏幕高度，设置成scoll-view的高度，实现触底事件
+						success: function (res) {
+							that.contentH = res.windowHeight;
+						},
+					});
+				})
 			},
 			
 			loadMore: function(){
@@ -252,24 +274,47 @@
 					console.log("loadMore");
 					this.loadMoreTemp = 0;			//防止多次触发
 					
-					let newcardList = this.allcardList.slice(this.cardListItem,this.cardListItem+4);//模拟后端接口返回四个新的数据
-					
-					//console.log(newcardList);
-					if(!newcardList.length == 0){				//判断是否还有新数据
-						this.cardList = this.cardList.concat(newcardList);			//返回的新数据加到当前的cardList
-						if(this.cardLeftHeight > this.cardRightHeight){				//把第一个新数据加到目前更低的栏上，以触发@load="onImageLoad"
-							this.cardListRight.push(newcardList[0]);			
+					//let newcardList = this.allcardList.slice(this.cardListItem,this.cardListItem+4);//模拟后端接口返回四个新的数据
+					var that = this;
+					var promise = new Promise(function(resolve,reject){
+						uni.request({
+							url: 'http://192.168.1.154:3000/goodsList/', //仅为示例，并非真实接口地址。
+							data: {
+								item: that.cardListItem
+							},
+							header: {
+								'content-type':'application/json' //自定义请求头信息
+							},
+							method:"GET",
+							success: (res) => {
+								console.log(res.data.result);
+								resolve(res.data.result.list);
+							}
+						});
+					})
+					promise.then((res)=>{
+						//console.log(newcardList);
+						let newcardList = res;
+						if(!newcardList.length == 0){				//判断是否还有新数据
+							this.cardList = this.cardList.concat(newcardList);			//返回的新数据加到当前的cardList
+							if(this.cardLeftHeight > this.cardRightHeight){				//把第一个新数据加到目前更低的栏上，以触发@load="onImageLoad"
+								this.cardListRight.push(newcardList[0]);			
+							}else{
+								this.cardListLeft.push(newcardList[0]);
+							}
 						}else{
-							this.cardListLeft.push(newcardList[0]);
+							this.showNoMore = true;				//没有新数据就显示到底了
 						}
-					}else{
-						this.showNoMore = true;				//没有新数据就显示到底了
-					}
+					})
+					
+					
+					
 					
 					
 				}
 				
-			}
+			},
+
 		}
 	}
 </script>
